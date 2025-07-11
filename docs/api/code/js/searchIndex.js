@@ -1,25 +1,25 @@
 Search.appendIndex(
     [
                 {
-            "fqsen": "\\App\\Console\\Commands\\HelpSitewpro",
-            "name": "HelpSitewpro",
-            "summary": "Class\u0020HelpSitewpro",
-            "url": "classes/App-Console-Commands-HelpSitewpro.html"
+            "fqsen": "\\App\\Console\\Commands\\HelpSitenpro",
+            "name": "HelpSitenpro",
+            "summary": "Class\u0020HelpSitenpro",
+            "url": "classes/App-Console-Commands-HelpSitenpro.html"
         },                {
-            "fqsen": "\\App\\Console\\Commands\\HelpSitewpro\u003A\u003Ahandle\u0028\u0029",
+            "fqsen": "\\App\\Console\\Commands\\HelpSitenpro\u003A\u003Ahandle\u0028\u0029",
             "name": "handle",
             "summary": "Execute\u0020the\u0020console\u0020command.",
-            "url": "classes/App-Console-Commands-HelpSitewpro.html#method_handle"
+            "url": "classes/App-Console-Commands-HelpSitenpro.html#method_handle"
         },                {
-            "fqsen": "\\App\\Console\\Commands\\HelpSitewpro\u003A\u003A\u0024signature",
+            "fqsen": "\\App\\Console\\Commands\\HelpSitenpro\u003A\u003A\u0024signature",
             "name": "signature",
             "summary": "The\u0020name\u0020and\u0020signature\u0020of\u0020the\u0020console\u0020command.",
-            "url": "classes/App-Console-Commands-HelpSitewpro.html#property_signature"
+            "url": "classes/App-Console-Commands-HelpSitenpro.html#property_signature"
         },                {
-            "fqsen": "\\App\\Console\\Commands\\HelpSitewpro\u003A\u003A\u0024description",
+            "fqsen": "\\App\\Console\\Commands\\HelpSitenpro\u003A\u003A\u0024description",
             "name": "description",
             "summary": "The\u0020console\u0020command\u0020description.",
-            "url": "classes/App-Console-Commands-HelpSitewpro.html#property_description"
+            "url": "classes/App-Console-Commands-HelpSitenpro.html#property_description"
         },                {
             "fqsen": "\\App\\Http\\Controllers\\Controller",
             "name": "Controller",
