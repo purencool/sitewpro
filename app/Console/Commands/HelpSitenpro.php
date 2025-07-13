@@ -23,7 +23,7 @@ use Illuminate\Console\Command;
  * Sitenpro Help
  * -------------
  * Available commands:
- *   Sitenpro:help    Show this help message
+ *   Sitenpro:help Show this help message
  * ```
  *
  * @package App\Console\Commands
