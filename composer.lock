@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d7c6b68676f6ee0b4834b7289774f822",
+    "content-hash": "edb8a054f5eb93197efb501052bda1b3",
     "packages": [
         {
             "name": "brick/math",
@@ -642,6 +642,46 @@
                 }
             ],
             "time": "2024-07-20T21:45:45+00:00"
+        },
+        {
+            "name": "griffin-mocker/griffin-mocker",
+            "version": "0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://gitlab.com/griffin-mocker/griffin-mocker-php.git",
+                "reference": "d77364f32d8ceca9b6054d168041fe4fc5c71e1f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://gitlab.com/api/v4/projects/griffin-mocker%2Fgriffin-mocker-php/repository/archive.zip?sha=d77364f32d8ceca9b6054d168041fe4fc5c71e1f",
+                "reference": "d77364f32d8ceca9b6054d168041fe4fc5c71e1f",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "": "code/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Luka Unuk (luka8088)",
+                    "email": "luka8088@nrsk.net"
+                }
+            ],
+            "description": "PHP data mocker.",
+            "homepage": "https://bitbucket.org/luka8088/php-mocker/",
+            "support": {
+                "issues": "https://gitlab.com/api/v4/projects/17186531/issues"
+            },
+            "time": "2016-04-13T07:32:38+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",

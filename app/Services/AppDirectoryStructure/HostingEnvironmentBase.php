@@ -2,6 +2,8 @@
 
 namespace App\Services\AppDirectoryStructure;
 
+use App\Services\EnvironmentVariables;
+
 /**
  * Class HostingEnvironmentManager
  *
@@ -12,36 +14,16 @@ namespace App\Services\AppDirectoryStructure;
 class HostingEnvironmentBase
 {
     /**
-     * @var string
+     * @var object
      */
-    protected string $defaultPath;
-
-    /**
-     * @var array
-     */
-    protected array $environments;
+    protected object $envVar;
 
     /**
      *
      */
     public function __construct(){
-        $this->getDefaultPath();
-        $this->getEnvironments();
+      $this->envVar = new EnvironmentVariables();
     }
-
-    /**
-     * Get the default hosting site path from the environment.
-     *
-     * @return string
-     */
-    public function getDefaultPath(): string
-    {
-        $this->defaultPath = app_path(
-          "/../../". env('HOSTING_SITE_DEFAULT_PATH', 'default_path')
-        );
-        return $this->defaultPath;
-    }
-
 
     /**
      * Create a directory at the given path if it does not exist.
@@ -50,8 +32,8 @@ class HostingEnvironmentBase
      */
     public function createBaseDirectory(): bool
     {
-        if (!is_dir($this->defaultPath)) {
-            return mkdir($this->defaultPath, 775, true);
+        if (!is_dir($this->envVar->getHostingSiteBaseDirectoryPath())) {
+            return mkdir($this->envVar->getHostingSiteBaseDirectoryPath(), 775, true);
         }
         return true;
     }
@@ -63,42 +45,10 @@ class HostingEnvironmentBase
      */
     public function destroyBaseDirectory(): bool
     {
-        if (is_dir($this->defaultPath)) {
-            return rmdir($this->defaultPath);
+        if (is_dir($this->envVar->getHostingSiteBaseDirectoryPath())) {
+            return rmdir($this->envVar->getHostingSiteBaseDirectoryPath());
         }
         return true;
-    }
-
-    /**
-     * Returns base path string.
-     *
-     * @return string
-     */
-    public function getBaseDirectoryPathName(): string
-    {
-        return env('HOSTING_SITE_DEFAULT_PATH', 'default_path');
-    }
-
-    /**
-     * Returns base directory name string.
-     *
-     * @return string
-     */
-    public function getBaseDirectoryPath(): string
-    {
-        return $this->defaultPath;
-    }
-
-    /**
-     * Get the hosting site environments as an array from the environment.
-     *
-     * @return array
-     */
-    public function getEnvironments(): array
-    {
-        $hostEnvironments =explode(',', env('HOSTING_SITE_ENVIRONMENTS', '[]'));
-        $this->environments = is_array($hostEnvironments) ? $hostEnvironments : [];
-        return $this->environments;
     }
 
 }

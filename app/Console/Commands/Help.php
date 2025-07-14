@@ -5,10 +5,10 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 
 /**
- * Class HelpSitenpro
+ * Class Help
  *
  * The `Sitenpro:help` console command displays detailed help information
- * about the Sitenpro application, its available commands, and usage instructions.
+ * about the application, its available commands, and usage instructions.
  *
  * ## Usage
  * ```
@@ -28,14 +28,14 @@ use Illuminate\Console\Command;
  *
  * @package App\Console\Commands
  */
-class HelpSitenpro extends Command
+class Help extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'Sitenpro:help';
+    protected $signature = 'spro:help';
 
     /**
      * The console command description.

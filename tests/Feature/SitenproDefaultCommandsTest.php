@@ -8,12 +8,12 @@ use Tests\TestCase;
 /**
  *
  */
-class SitenproCommandsTest extends TestCase
+class SitenproDefaultCommandsTest extends TestCase
 {
     /** @test */
     public function it_displays_the_welcome_message()
     {
-        $this->artisan('Sitenpro:help')
+        $this->artisan('spro:help')
             ->expectsOutput('-------------------------------------')
             ->expectsOutput('Sitenpro Help')
             ->expectsOutput('-------------------------------------')
