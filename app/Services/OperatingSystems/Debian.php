@@ -27,6 +27,7 @@ class Debian
     public function updateOSSoftware( string $password ): string
     {
         $this->shellExec($password, 'apt update');
+        return 'updated';
     }
 
 
