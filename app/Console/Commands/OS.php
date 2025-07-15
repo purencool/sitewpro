@@ -31,9 +31,10 @@ class OS extends Command
     /**
      * The name and signature of the console command.
      *
-     * @var string
+     * Add a --force option to allow non-interactive execution.
      */
-    protected $signature = 'spro:os:update {password}';
+    protected $signature = 'spro:os:update {--force : Run without confirmation}';
+
 
 
     /**
@@ -49,6 +50,15 @@ class OS extends Command
      */
     public function handle() : void
     {
+
+        // If --force or --no-interaction is provided, skip confirmation
+        if ($this->option('force') || $this->input->isInteractive() === false) {
+            $this->info('Running OS update (non-interactive mode)...');
+            $this->performUpdate();
+            $this->info('Update complete!');
+        }
+
+
         $password = $this->argument('password');
         $result = (new Debian())->updateOSSoftware($password);
         $this->info($result);

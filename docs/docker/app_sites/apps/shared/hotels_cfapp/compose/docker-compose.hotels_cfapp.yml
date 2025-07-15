@@ -1,0 +1,7 @@
+services:
+  hotels_cfapp:
+    image: httpd:alpine3.22
+    ports:
+      - "8080:80"
+    volumes:
+      - ./apps/shared/hotels_cfapp/code/www:/usr/local/apache2/htdocs
