@@ -10,14 +10,14 @@ class EnvironmentVariablesTest extends TestCase
     /** @test */
     public function it_gets_the_hosting_site_default_directory()
     {
-        $expected = "sitenpro_app";
+        $expected = "hosting";
         $this->assertEquals($expected,(new EnvironmentVariables())->getHostingSiteBaseDirectory());
     }
 
     /** @test */
     public function it_gets_the_hosting_site_default_directory_path()
     {
-        $expected = app_path("/../../sitenpro_app");
+        $expected = app_path("/../../hosting");
         $this->assertEquals($expected,(new EnvironmentVariables())->getHostingSiteBaseDirectoryPath());
     }
 
@@ -29,7 +29,7 @@ class EnvironmentVariablesTest extends TestCase
     }
 
     /** @test */
-    public function it_gets_hosting_site_os()
+    public function it_gets_default_domain()
     {
         $expected = "debian";
         $this->assertEquals($expected,(new EnvironmentVariables())->getHostingOS());
