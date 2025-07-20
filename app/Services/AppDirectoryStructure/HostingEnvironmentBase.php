@@ -2,6 +2,7 @@
 
 namespace App\Services\AppDirectoryStructure;
 
+use App\Services\AppConfigurationCreators\SiteConfiguration;
 use App\Services\EnvironmentVariables;
 
 /**
@@ -51,7 +52,6 @@ class HostingEnvironmentBase
         return true;
     }
 
-
     /**
      * Create a directory at the given path if it does not exist.
      *
@@ -62,7 +62,7 @@ class HostingEnvironmentBase
         $environmentArr = (new EnvironmentVariables())->getHostingSiteEnvironmentsArray();
         foreach ($environmentArr as $environment) {
             if (!is_dir($this->envVar->getHostingSiteBaseDirectoryPath() ."/" . $environment)) {
-                 mkdir($this->envVar->getHostingSiteBaseDirectoryPath() ."/" . $environment,);
+                 mkdir($this->envVar->getHostingSiteBaseDirectoryPath() ."/" . $environment);
             }
         }
         return true;
@@ -79,6 +79,80 @@ class HostingEnvironmentBase
         foreach ($environmentArr as $environment) {
             if (is_dir($this->envVar->getHostingSiteBaseDirectoryPath() ."/" . $environment)) {
                 rmdir($this->envVar->getHostingSiteBaseDirectoryPath() ."/" . $environment);
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Count if sites are in environment.
+     *
+     * @param string $siteName
+     * @return int
+     */
+    public function sitesEnvironmentDirectoriesCount(string $siteName): int
+    {
+        $siteNameCount = 0;
+        $environmentArr = (new EnvironmentVariables())->getHostingSiteEnvironmentsArray();
+        foreach ($environmentArr as $environment) {
+            if (is_dir($this->envVar->getHostingSiteBaseDirectoryPath() ."/" . $environment)) {
+                if (is_dir($this->envVar->getHostingSiteBaseDirectoryPath() ."/" . $environment."/" . $siteName)) {
+                   $siteNameCount++;
+                }
+            }
+        }
+        return $siteNameCount;
+    }
+
+    /**
+     * Create site directories.
+     *
+     * @param string $siteName
+     * @return bool
+     */
+    public function createSiteDirectories(string $siteName): bool
+    {
+        $environmentArr = (new EnvironmentVariables())->getHostingSiteEnvironmentsArray();
+        foreach ($environmentArr as $environment) {
+            if (!is_dir($this->envVar->getHostingSiteBaseDirectoryPath() ."/" . $environment . "/" . $siteName)) {
+                mkdir($this->envVar->getHostingSiteBaseDirectoryPath() ."/" . $environment . "/" . $siteName);
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Destroy site directories.
+     *
+     * @param string $siteName
+     * @return bool
+     */
+    public function destroySiteDirectories(string $siteName): bool
+    {
+        $environmentArr = (new EnvironmentVariables())->getHostingSiteEnvironmentsArray();
+        foreach ($environmentArr as $environment) {
+            if (!is_dir($this->envVar->getHostingSiteBaseDirectoryPath() ."/" . $environment . "/" . $siteName)) {
+                rmdir($this->envVar->getHostingSiteBaseDirectoryPath() ."/" . $environment . "/" . $siteName);
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Create site configuration.
+     *
+     * @param string $siteName
+     * @return bool
+     */
+    public function createSiteDefaultConfiguration(string $siteName): bool
+    {
+        $environmentArr = (new EnvironmentVariables())->getHostingSiteEnvironmentsArray();
+        foreach ($environmentArr as $environment) {
+            if (!is_file($this->envVar->getHostingSiteBaseDirectoryPath() ."/" . $environment . "/" . $siteName)) {
+                (new siteConfiguration())->createDefaultConfiguration(
+                    $siteName,
+                    $this->envVar->getHostingSiteBaseDirectoryPath() ."/" . $environment . "/" . $siteName
+                );
             }
         }
         return true;

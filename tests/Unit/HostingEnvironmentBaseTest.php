@@ -3,7 +3,6 @@
 namespace Tests\Unit;
 
 use App\Services\AppDirectoryStructure\HostingEnvironmentBase;
-use App\Services\EnvironmentVariables;
 use Tests\TestCase;
 
 class HostingEnvironmentBaseTest extends TestCase

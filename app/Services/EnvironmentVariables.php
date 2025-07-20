@@ -59,5 +59,4 @@ class EnvironmentVariables
             "/../../". $this->getHostingSiteBaseDirectory()
         );
     }
-
 }

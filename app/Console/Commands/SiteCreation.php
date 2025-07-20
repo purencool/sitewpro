@@ -68,15 +68,7 @@ class SiteCreation extends Command
         $actionUpdate = $this->ask('What actions do you want to run on each deployment separate with a comma (eg: composer update, next command)?');
         $resultsFromTheQuestions['action_update'] = $actionUpdate;
 
-        // 6. The console will then ask what domains will be used as entry points to access the application.
-        $entryPoints = $this->ask('What domains will be used as entry points to access the application separate with a comma?');
-        $resultsFromTheQuestions['entry_points'] = $entryPoints;
-
-        // 7. What is the environment that this application will be deployed to?
-        $environment = $this->choice('What is the environment that this application will be deployed to?', ['Development', 'Staging', 'Production']);
-        $resultsFromTheQuestions['environment'] = $environment;
-
-        // 8. What type of database names system will be used for this application?
+        // 6. What type of database names system will be used for this application?
         $databaseManagementSystem = $this->ask('What are the database names need for this application separate with a comma?');
         $resultsFromTheQuestions['database_names'] = $databaseManagementSystem;
 

@@ -3,6 +3,8 @@
 namespace App\Services\AppConfigurationCreators;
 
 use Illuminate\Support\Facades\Storage;
+use App\Services\EnvironmentVariables;
+use App\Services\AppDirectoryStructure\HostingEnvironmentBase;
 
 /**
  *
@@ -15,6 +17,18 @@ class AppConfiguration
      */
     public function create($resultsFromTheQuestions): string
     {
+        $manager = new HostingEnvironmentBase();
+        $manager->createBaseDirectory();
+        $manager->createEnvironmentDirectories();
+        $uniqueDomain = $resultsFromTheQuestions['domain'];
+        if($manager->sitesEnvironmentDirectoriesCount($uniqueDomain) > 0) {
+            return $uniqueDomain. ' already exists';
+        }
+        preg_replace('/[^a-zA-Z0-9.]/', '', $uniqueDomain);
+        $manager->createSiteDirectories(strtolower($uniqueDomain));
+        $manager->createSiteDefaultConfiguration($uniqueDomain);
+
+
         return 'Site configuration created successfully';
 
         // Create a new site configuration
