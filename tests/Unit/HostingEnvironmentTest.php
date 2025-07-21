@@ -2,10 +2,10 @@
 
 namespace Tests\Unit;
 
-use App\Services\AppDirectoryStructure\HostingEnvironmentBase;
+use App\Services\AppDirectoryStructure\HostingEnvironment;
 use Tests\TestCase;
 
-class HostingEnvironmentBaseTest extends TestCase
+class HostingEnvironmentTest extends TestCase
 {
 
     /**
@@ -25,7 +25,7 @@ class HostingEnvironmentBaseTest extends TestCase
     /** @test */
     public function it_creates_a_base_app_directory()
     {
-        $manager = new HostingEnvironmentBase();
+        $manager = new HostingEnvironment();
         $this->assertFalse(is_dir($this->defaultPath));
         $this->assertTrue($manager->createBaseDirectory());
         $this->assertTrue(is_dir($this->defaultPath));
@@ -34,7 +34,7 @@ class HostingEnvironmentBaseTest extends TestCase
     /** @test */
     public function it_creates_environment_app_directories()
     {
-        $manager = new HostingEnvironmentBase();
+        $manager = new HostingEnvironment();
         $this->assertTrue(is_dir($this->defaultPath));
         $this->assertTrue($manager->createEnvironmentDirectories());
     }
@@ -46,7 +46,7 @@ class HostingEnvironmentBaseTest extends TestCase
      */
     public function it_uninstall_app_directories()
     {
-        $manager = new HostingEnvironmentBase();
+        $manager = new HostingEnvironment();
         $this->assertTrue($manager->destroyEnvironmentDirectories());
         $this->assertTrue($manager->destroyBaseDirectory());
         $this->assertFalse(is_dir($this->defaultPath));

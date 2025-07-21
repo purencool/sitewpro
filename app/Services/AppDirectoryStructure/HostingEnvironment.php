@@ -12,7 +12,7 @@ use App\Services\EnvironmentVariables;
  *
  * @package App\Services
  */
-class HostingEnvironmentBase
+class HostingEnvironment
 {
     /**
      * @var object
@@ -151,7 +151,7 @@ class HostingEnvironmentBase
             if (!is_file($this->envVar->getHostingSiteBaseDirectoryPath() ."/" . $environment . "/" . $siteName)) {
                 (new siteConfiguration())->createDefaultConfiguration(
                     $siteName,
-                    $this->envVar->getHostingSiteBaseDirectoryPath() ."/" . $environment . "/" . $siteName
+                    $environment,
                 );
             }
         }

@@ -59,4 +59,14 @@ class EnvironmentVariables
             "/../../". $this->getHostingSiteBaseDirectory()
         );
     }
+
+    /**
+     * Default hosting domain.
+     *
+     * @return string
+     */
+    public function getHostingDomain(): string
+    {
+        return env('HOSTING_DEFAULT_DOMAIN', '');
+    }
 }

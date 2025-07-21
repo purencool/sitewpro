@@ -2,9 +2,7 @@
 
 namespace App\Services\AppConfigurationCreators;
 
-use Illuminate\Support\Facades\Storage;
-use App\Services\EnvironmentVariables;
-use App\Services\AppDirectoryStructure\HostingEnvironmentBase;
+use App\Services\AppDirectoryStructure\HostingEnvironment;
 
 /**
  *
@@ -17,70 +15,39 @@ class AppConfiguration
      */
     public function create($resultsFromTheQuestions): string
     {
-        $manager = new HostingEnvironmentBase();
+        $manager = new HostingEnvironment();
         $manager->createBaseDirectory();
         $manager->createEnvironmentDirectories();
         $uniqueDomain = $resultsFromTheQuestions['domain'];
+        unset($resultsFromTheQuestions['domain']);
         if($manager->sitesEnvironmentDirectoriesCount($uniqueDomain) > 0) {
-            return $uniqueDomain. ' already exists';
+            return $uniqueDomain. ' unique domain already exists and can\'t be use.';
         }
         preg_replace('/[^a-zA-Z0-9.]/', '', $uniqueDomain);
         $manager->createSiteDirectories(strtolower($uniqueDomain));
         $manager->createSiteDefaultConfiguration($uniqueDomain);
-
-
-        return 'Site configuration created successfully';
-
-        // Create a new site configuration
-        $site = new SiteObject();
-        $site->domain = $domain;
-        $site->software = '';
-        $site->description = '';
-        $site->container_image = [];
-        $site->code_management = [
-            'url' => '',
-            'authentication' => [],
-            'actions' => []
-        ];
-        $site->domains = [];
-        $site->database_management = [
-            'connections' => [
-                'one' => [
-                    'path' => '',
-                    'host' => 'localhost',
-                    'port' => 3306,
-                    'username' => '',
-                    'password' => ''
-                ]
-            ]
-        ];
-
-        // Save the site configuration to storage
-        Storage::disk('local')->put("{$defaultDomain}/{$domain}.php", json_encode($site));
-
-        return 'created';
+        $this->update($uniqueDomain, $resultsFromTheQuestions);
+        return "$uniqueDomain has been created successfully.";
     }
 
     /**
-     * @param $domain
-     * @param $defaultDomain
+     * @param string $siteName
+     * @param array $arrayUpdates
+     * @param string $environment
      * @return void
      */
-    public function update($domain, $defaultDomain): void
+    public function update(string $siteName, array $arrayUpdates, string $environment = 'all'): void
     {
-        // Get the existing site configuration from storage
-        $site = json_decode(Storage::disk('local')->get("{$defaultDomain}/{$domain}.php"), true);
+        $siteArray = (new SiteConfiguration())->getSitesConfiguration($siteName);
+        if($environment == 'all') {
+            foreach($siteArray as $siteKey => $site) {
+                $siteArray[$siteKey]['user'] = array_merge_recursive($siteArray[$siteKey]['user'], $arrayUpdates);
+            }
+        } else {
+            $siteArray[$environment] = array_merge_recursive($siteArray[$environment]['user'],  $arrayUpdates);
+        }
 
-        // Update the site configuration
-        $site['software'] = '';
-        $site['description'] = '';
-        $site['container_image'] = [];
-        $site['code_management']['url'] = '';
-        $site['code_management']['authentication'] = [];
-        $site['code_management']['actions'] = [];
-
-        // Save the updated site configuration to storage
-        Storage::disk('local')->put("{$defaultDomain}/{$domain}.php", json_encode($site));
+        (new SiteConfiguration())->setDefaultConfiguration($siteArray);
     }
 
     /**
@@ -91,6 +58,16 @@ class AppConfiguration
     public function delete($domain, $defaultDomain): void
     {
         // Delete the site configuration from storage
-        Storage::disk('local')->delete("{$defaultDomain}/{$domain}.php");
+    }
+
+    /**
+     * Get all configuration for a domain
+     *
+     * @param $domain
+     * @return array
+     */
+    public function getConfiguration($domain): array
+    {
+        return (new SiteConfiguration())->getSitesConfiguration($domain);
     }
 }
