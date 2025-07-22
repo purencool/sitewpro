@@ -37,7 +37,7 @@ class SiteConfiguration
     public array $siteArr = array(
         "system" => array(
             "default.domain" => "", // Default domain and unique to this application across all environments.
-            "environment" => '',
+            "environment" => "",
             "database" => array( // Database connections to be used for the application
                 "connections" => array(
                     "one" => array(
@@ -73,13 +73,13 @@ class SiteConfiguration
             ),
         ),
         "user" => array(
-            "software" => "", // The type of software, for example, Drupal, Joomla, Django.
-            "description" => "", // Description of domain and what it is and does.
-            "container_image" => array(), // Docker or podman containers need to run this application.
+            "software" => array(), // The type of software, for example, Drupal, Joomla, Django.
+            "description" => array(), // Description of domain and what it is and does.
+            "container_type" => array(), // Docker or podman containers need to run this application.
             "code_management" => array( // Where the code is keep so it can be pulled using git or something else.
-                "url" => "", // The url to where the code is kept if null it's assume the code is manually added.
+                "url" => array(), // The url to where the code is kept if null it's assume the code is manually added.
                 "authentication" => array(), // The way to authenticate.
-                "actions" => array("") // Actions to take on deployment.
+                "actions" => array() // Actions to take on deployment.
             ),
             "domains" => array(), // Domains applied to this application
             "web_root" => array(

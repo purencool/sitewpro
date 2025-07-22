@@ -1,0 +1,30 @@
+#!/bin/bash
+
+function help(){
+    echo ''
+    echo '-------------------------------------------------------------'
+    echo ' Commands you can use.                                       '
+    echo '-------------------------------------------------------------'
+    echo ' domains:add   ./sitenpro spro:site:domains:add              '
+    echo ' config        ./sitenpro spro:site:config                   '
+    echo ' config:find   ./sitenpro spro:site:config $2 | jq ".[] | $3"'
+    echo ' create        ./sitenpro spro:site:creation $2              '
+    echo '-------------------------------------------------------------'
+    echo ''
+}
+
+if [[ "$1" == "domains:add" ]]; then
+   ./sitenpro spro:site:domains:add $2
+
+elif [[ "$1" == "config" ]]; then
+  ./sitenpro spro:site:config $2
+
+elif [[ "$1" == "config:find" ]]; then
+  ./sitenpro spro:site:config $2 | jq ".[] | $3"
+
+elif [ "$1" == "create" ]; then
+  ./sitenpro spro:site:creation $2
+
+else
+  help
+fi

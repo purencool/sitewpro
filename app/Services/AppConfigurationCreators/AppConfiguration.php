@@ -18,8 +18,7 @@ class AppConfiguration
         $manager = new HostingEnvironment();
         $manager->createBaseDirectory();
         $manager->createEnvironmentDirectories();
-        $uniqueDomain = $resultsFromTheQuestions['domain'];
-        unset($resultsFromTheQuestions['domain']);
+        $uniqueDomain = $resultsFromTheQuestions['default.domain'];
         if($manager->sitesEnvironmentDirectoriesCount($uniqueDomain) > 0) {
             return $uniqueDomain. ' unique domain already exists and can\'t be use.';
         }
@@ -31,23 +30,32 @@ class AppConfiguration
     }
 
     /**
+     * Update site arrays for configuration.
+     *
      * @param string $siteName
      * @param array $arrayUpdates
      * @param string $environment
-     * @return void
+     * @return string
      */
-    public function update(string $siteName, array $arrayUpdates, string $environment = 'all'): void
+    public function update(string $siteName, array $arrayUpdates, string $environment = 'all'): string
     {
+        $return = array();
         $siteArray = (new SiteConfiguration())->getSitesConfiguration($siteName);
         if($environment == 'all') {
             foreach($siteArray as $siteKey => $site) {
                 $siteArray[$siteKey]['user'] = array_merge_recursive($siteArray[$siteKey]['user'], $arrayUpdates);
+                $return[$siteKey] = $siteArray[$siteKey]['user'];
             }
         } else {
-            $siteArray[$environment] = array_merge_recursive($siteArray[$environment]['user'],  $arrayUpdates);
+
+            $siteArray[$environment]['user'] = array_merge_recursive($siteArray[$environment]['user'], $arrayUpdates);
+           // print_r($siteArray[$environment]);
+           // exit;
+            $return[$environment] = $siteArray[$environment]['user'];
         }
 
         (new SiteConfiguration())->setDefaultConfiguration($siteArray);
+        return json_encode($return, true);
     }
 
     /**

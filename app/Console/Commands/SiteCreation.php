@@ -15,7 +15,7 @@ class SiteCreation extends Command
      *
      * @var string
      */
-    protected $signature = 'spro:site:creation {domain?}';
+    protected $signature = 'spro:site:creation {default.domain?}';
 
 
     /**
@@ -34,11 +34,11 @@ class SiteCreation extends Command
         $creation = new AppConfiguration();
 
         // 1. What is your unique domain or will check the one provided?
-        if ($this->argument('domain')) {
-           $resultsFromTheQuestions['domain'] = $this->argument('domain');
+        if ($this->argument('default.domain')) {
+           $resultsFromTheQuestions['default.domain'] = $this->argument('default.domain');
        } else {
           $domain = $this->ask('What is the systems unique domain to be used for this application (eg: hotels.com)?');
-          $resultsFromTheQuestions['domain'] = $domain;
+          $resultsFromTheQuestions['default.domain'] = $domain;
         }
 
         // 2. What type of software are you using?
@@ -61,12 +61,12 @@ class SiteCreation extends Command
             $gitUrl = $this->ask('Please provide the Git repository URL');
             $gitAuth = $this->secret('Please enter your Git authentication credentials');
         }
-        $resultsFromTheQuestions['git_url'] = $gitUrl;
-        $resultsFromTheQuestions['git_auth'] = $gitAuth;
+        $resultsFromTheQuestions['code_management']['url'] = $gitUrl;
+        $resultsFromTheQuestions['code_management']['auth'] = $gitAuth;
 
         // Action updates
         $actionUpdate = $this->ask('What actions do you want to run on each deployment separate with a comma (eg: composer update, next command)?');
-        $resultsFromTheQuestions['action_update'] = $actionUpdate;
+        $resultsFromTheQuestions['code_management']['actions'] = $actionUpdate;
 
         // 6. What type of database names system will be used for this application?
         $databaseManagementSystem = $this->ask('What are the database names need for this application separate with a comma?');

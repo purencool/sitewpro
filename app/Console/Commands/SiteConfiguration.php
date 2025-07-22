@@ -15,7 +15,7 @@ class SiteConfiguration extends Command
      *
      * @var string
      */
-    protected $signature = 'spro:site:config {domain?}';
+    protected $signature = 'spro:site:config {default.domain?}';
 
 
     /**
@@ -30,7 +30,7 @@ class SiteConfiguration extends Command
      */
     public function handle(): void
     {
-        $results = (new AppConfiguration())->getConfiguration($this->argument('domain'));
+        $results = (new AppConfiguration())->getConfiguration($this->argument('default.domain'));
         $this->info(json_encode($results, true));
     }
 }
