@@ -31,6 +31,6 @@ class SiteConfiguration extends Command
     public function handle(): void
     {
         $results = (new AppConfiguration())->getConfiguration($this->argument('default.domain'));
-        $this->info(json_encode($results, true));
+        $this->info(json_encode($results,JSON_PRETTY_PRINT));
     }
 }

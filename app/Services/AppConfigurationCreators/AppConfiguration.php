@@ -2,6 +2,8 @@
 
 namespace App\Services\AppConfigurationCreators;
 
+use App\Services\AppConfigurationCreators\Items\ArrayRemove;
+use App\Services\AppConfigurationCreators\Items\ArrayUpdate;
 use App\Services\AppDirectoryStructure\HostingEnvironment;
 
 /**
@@ -39,43 +41,38 @@ class AppConfiguration
      */
     public function update(string $siteName, array $arrayUpdates, string $environment = 'all'): string
     {
-        $return = array();
         $siteArray = (new SiteConfiguration())->getSitesConfiguration($siteName);
-        if($environment == 'all') {
-            foreach($siteArray as $siteKey => $site) {
-                $siteArray[$siteKey]['user'] = array_merge_recursive($siteArray[$siteKey]['user'], $arrayUpdates);
-                $return[$siteKey] = $siteArray[$siteKey]['user'];
-            }
-        } else {
 
-            $siteArray[$environment]['user'] = array_merge_recursive($siteArray[$environment]['user'], $arrayUpdates);
-           // print_r($siteArray[$environment]);
-           // exit;
-            $return[$environment] = $siteArray[$environment]['user'];
-        }
-
-        (new SiteConfiguration())->setDefaultConfiguration($siteArray);
-        return json_encode($return, true);
+        $upDatedArray = (new ArrayUpdate())->update($siteArray, $arrayUpdates, $environment);
+        (new SiteConfiguration())->setDefaultConfiguration($upDatedArray);
+        return json_encode((new SiteConfiguration())->getSitesConfiguration($siteName)[$environment], JSON_PRETTY_PRINT);
     }
 
     /**
-     * @param $domain
-     * @param $defaultDomain
-     * @return void
+     * @param string $siteName
+     * @param array $arrayUpdates
+     * @param string $environment
+     * @return string
      */
-    public function delete($domain, $defaultDomain): void
+    public function remove(string $siteName, array $arrayUpdates, string $environment ): string
     {
-        // Delete the site configuration from storage
+        $siteArray = (new SiteConfiguration())->getSitesConfiguration($siteName);
+        $cleaner = new ArrayRemove();
+        $cleaner->setArray($siteArray[$environment]['user']);
+        $cleaner->remove($arrayUpdates['path'], $arrayUpdates['item']);
+        $siteArray[$environment]['user'] = $cleaner->getArray();
+         (new SiteConfiguration())->setDefaultConfiguration($siteArray);
+         return json_encode($siteArray[$environment], JSON_PRETTY_PRINT);
     }
 
     /**
-     * Get all configuration for a domain
+     * Get all configuration for a siteName
      *
-     * @param $domain
+     * @param $siteName
      * @return array
      */
-    public function getConfiguration($domain): array
+    public function getConfiguration($siteName): array
     {
-        return (new SiteConfiguration())->getSitesConfiguration($domain);
+        return (new SiteConfiguration())->getSitesConfiguration($siteName);
     }
 }

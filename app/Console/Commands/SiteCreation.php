@@ -43,7 +43,7 @@ class SiteCreation extends Command
 
         // 2. What type of software are you using?
         $softwareType = $this->ask('What type of software are you using?');
-        $resultsFromTheQuestions['software_type'] = $softwareType;
+        $resultsFromTheQuestions['software'] = $softwareType;
 
         // 3. Please provide a description of what this app does.
         $description = $this->ask('Please provide a description of what this app does.');
