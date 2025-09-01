@@ -1,7 +1,5 @@
 #!/bin/bash
 
-
-
 ##
 # Install bases packages on the host server.
 ##
@@ -40,11 +38,10 @@ if [[ "$1" == "debian" ]]; then
   ##
   # Install application
   ##
+  cd ./app
   cp .env.example .env
   /usr/local/bin/composer update
-
 else
     echo "Installation was not completed"
 fi
-
 
