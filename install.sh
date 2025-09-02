@@ -11,7 +11,7 @@ if [[ "$1" == "debian" ]]; then
   sudo apt-get update & sudo apt upgrade
 
   # Install default packages.
-  sudo apt-get install git php php-curl php-xml p7zip-full p7zip-rar install ca-certificates curl -y
+  sudo apt-get install git php php-cli php-curl php-xml p7zip-full p7zip-rar install ca-certificates curl -y
 
   # Setup docker
   sudo install -m 0755 -d /etc/apt/keyrings
