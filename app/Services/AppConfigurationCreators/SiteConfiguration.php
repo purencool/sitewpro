@@ -126,6 +126,11 @@ class SiteConfiguration
      */
     public function getSitesConfiguration(string $siteName): array
     {
+        if( $siteName === "" )
+        {
+            return array();
+        }
+        
         $return = array();
         $environmentArr = (new EnvironmentVariables())->getHostingSiteEnvironmentsArray();
         foreach( $environmentArr as $environment)
@@ -157,6 +162,37 @@ class SiteConfiguration
             $jsonOutput = json_encode($environmentData, JSON_PRETTY_PRINT);
             file_put_contents($path , $jsonOutput);
         }
+    }
+
+    /**
+     * Get a list of all domains for all environments.
+     *
+     * @return array
+     */
+    public function getListDomains(): array
+    {
+        $return = [];
+        $environmentArr = (new EnvironmentVariables())->getHostingSiteEnvironmentsArray();
+        foreach( $environmentArr as $environment)
+        {
+            $path = (new EnvironmentVariables())->getHostingSiteBaseDirectoryPath()
+                ."/" . $environment;
+            $directories = array_filter(glob($path . '/*'), 'is_dir');
+            foreach($directories as $directory) {
+                $siteName = basename($directory);
+                $siteConfig = $this->getSitesConfiguration($siteName);
+                if(isset($siteConfig[$environment]['user']['domains'])) {
+                    foreach($siteConfig[$environment]['user']['domains'] as $domain) {
+                        $return[] = [
+                            'environment' => $environment,
+                            'site' => $siteName,
+                            'domain' => $domain
+                        ];
+                    }
+                }
+            }
+        }
+        return $return;
     }
 }
 

@@ -6,6 +6,7 @@ function help(){
     echo ' Commands you can use.                                                                       '
     echo '---------------------------------------------------------------------------------------------'
     echo ' domains:add   ./sitenpro spro:site:domains:add {default.domain}                             '
+    echo ' domains:list  ./sitenpro spro:site:domains:list                                             '
     echo ' config        ./sitenpro spro:site:config {default.domain}                                  '
     echo ' config:find   ./sitenpro spro:site:config {default.domain} | jq ".[] | {string}"            '
     echo ' create        ./sitenpro spro:site:creation {default.domain}                                '
@@ -18,6 +19,9 @@ function help(){
 
 if [[ "$1" == "domains:add" ]]; then
    ./sitenpro spro:site:domains:add "$2"
+   
+elif [[ "$1" == "domains:list" ]]; then
+  ./sitenpro spro:site:domains:list
 
 elif [[ "$1" == "config" ]]; then
   ./sitenpro spro:site:config "$2"

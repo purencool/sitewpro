@@ -75,4 +75,13 @@ class AppConfiguration
     {
         return (new SiteConfiguration())->getSitesConfiguration($siteName);
     }
+
+    /**
+     * Get a list of all domains for all environments.
+     *
+     * @return array
+     */    public function getListDomains(): array
+    {
+        return (new SiteConfiguration())->getListDomains();
+    }
 }
