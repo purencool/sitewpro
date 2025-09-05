@@ -4,7 +4,7 @@ namespace App\Console\Commands;
 
 use App\Services\EnvironmentVariables;
 use Illuminate\Console\Command;
-use App\Services\AppConfigurationCreators\AppConfiguration;
+use App\Http\Controllers\Controller as AppRestApi;
 
 /**
  * Class SiteListDomains
@@ -55,7 +55,7 @@ class SiteListDomains extends Command
      */
     public function handle(): void
     {
-        $creation = new AppConfiguration();
-        $this->info(json_encode($creation->getListDomains(),JSON_PRETTY_PRINT));
+        $creation = new AppRestApi();
+        $this->info(json_encode($creation->RequestHandler(),JSON_PRETTY_PRINT));
     }
 }
