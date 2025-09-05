@@ -1,0 +1,46 @@
+#!/bin/bash
+
+function help(){
+    echo ''
+    echo '---------------------------------------------------------------------------------------------'
+    echo ' Commands you can use.                                                                       '
+    echo '---------------------------------------------------------------------------------------------'
+    echo ' domains:add   ./appcli cli:site:domains:add {default.domain}                             '
+    echo ' domains:list  ./appcli cli:site:domains:list                                             '
+    echo ' config        ./appcli cli:site:config {default.domain}                                  '
+    echo ' config:find   ./appcli cli:site:config {default.domain} | jq ".[] | {string}"            '
+    echo ' create        ./appcli cli:site:creation {default.domain}                                '
+    echo ' item:add      ./appcli cli:site:item:add {default.domain} {environment} {json_string}    '
+    echo ' item:update   ./appcli cli:site:item:update {default.domain} {environment} {json_string} '
+    echo ' item:remove   ./appcli cli:site:item:remove {default.domain} {environment} {json_string} '
+    echo '---------------------------------------------------------------------------------------------'
+    echo ''
+}
+
+if [[ "$1" == "domains:add" ]]; then
+   ./appcli cli:site:domains:add "$2"
+   
+elif [[ "$1" == "domains:list" ]]; then
+  ./appcli cli:site:domains:list
+
+elif [[ "$1" == "config" ]]; then
+  ./appcli cli:site:config "$2"
+
+elif [[ "$1" == "config:find" ]]; then
+  ./appcli cli:site:config $2 | jq ".[] | $3"
+
+elif [ "$1" == "create" ]; then
+  ./appcli cli:site:creation "$2"
+
+elif [ "$1" == "item:add" ]; then
+  ./appcli cli:site:item:add "$2" "$3" "$4"
+
+elif [ "$1" == "item:update" ]; then
+  ./appcli cli:site:item:update "$2" "$3" "$4"
+
+elif [ "$1" == "item:remove" ]; then
+  ./appcli cli:site:item:remove "$2" "$3" "$4"
+
+else
+  help
+fi

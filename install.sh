@@ -41,7 +41,14 @@ if [[ "$1" == "debian" ]]; then
   cd ./app
   cp .env.example .env
   /usr/local/bin/composer update
+
+  echo "Do you want to install examples.com as a test site now? (y/n)"
+  read install_site
+  if [[ "$install_site" == "y" || "$install_site" == "Y" ]]; then
+    php artisan spro:site:creation "examples.com"
+  fi
 else
     echo "Installation was not completed"
 fi
 
+echo "Installation completed successfully. Change directory to app and run './cli' to see all available commands."

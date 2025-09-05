@@ -6,7 +6,31 @@ use Illuminate\Console\Command;
 use App\Services\AppConfigurationCreators\AppConfiguration;
 
 /**
+ * Class SiteCreation
  *
+ * The `cli:site:creation` console command creates a new site configuration.
+ *
+ * ## Usage
+ * ```
+ * php artisan cli:site:creation {default.domain}
+ * ```
+ *
+ * ## Options
+ * This command accepts the following arguments:
+ * - `default.domain`: The domain of the site to create the configuration for.
+ *
+ * ## Example Output
+ * ```
+ * {
+ *   "domain": "example.com",
+ *   "settings": {
+ *     "theme": "default",
+ *     "language": "en"
+ *   }
+ * }
+ * ```
+ *
+ * @package App\Console\Commands
  */
 class SiteCreation extends Command
 {
@@ -15,8 +39,7 @@ class SiteCreation extends Command
      *
      * @var string
      */
-    protected $signature = 'spro:site:creation {default.domain?}';
-
+    protected $signature = 'cli:site:creation {default.domain?}';
 
     /**
      * The console command description.

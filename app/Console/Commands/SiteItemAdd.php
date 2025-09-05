@@ -4,6 +4,33 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\Services\AppConfigurationCreators\AppConfiguration;
 
+/**
+ * Class SiteItemAdd
+ *
+ * The `cli:site:item:add` console command adds a new item to the site configuration.
+ *
+ * ## Usage
+ * ```
+ * php artisan cli:site:item:add {default.domain} {environment} {json_string}
+ * ```
+ *
+ * ## Options
+ * This command accepts the following arguments:
+ * - `default.domain`: The domain of the site to retrieve the configuration for.
+ *
+ * ## Example Output
+ * ```
+ * {
+ *   "domain": "example.com",
+ *   "settings": {
+ *     "theme": "default",
+ *     "language": "en"
+ *   }
+ * }
+ * ```
+ *
+ * @package App\Console\Commands
+ */
 class SiteItemAdd extends Command
 {
     /**
@@ -11,7 +38,7 @@ class SiteItemAdd extends Command
      *
      * @var string
      */
-    protected $signature = 'spro:site:item:add {default.domain} {environment} {json_string}';
+    protected $signature = 'cli:site:item:add {default.domain} {environment} {json_string}';
 
     /**
      * The console command description.

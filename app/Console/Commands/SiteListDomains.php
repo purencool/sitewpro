@@ -7,7 +7,31 @@ use Illuminate\Console\Command;
 use App\Services\AppConfigurationCreators\AppConfiguration;
 
 /**
+ * Class SiteListDomains
  *
+ * The `cli:site:domains` console command displays the domains for a specific site.
+ *
+ * ## Usage
+ * ```
+ * php artisan cli:site:domains {default.domain}
+ * ```
+ *
+ * ## Options
+ * This command accepts the following arguments:
+ * - `default.domain`: The domain of the site to retrieve the configuration for.
+ *
+ * ## Example Output
+ * ```
+ * {
+ *   "domain": "example.com",
+ *   "settings": {
+ *     "theme": "default",
+ *     "language": "en"
+ *   }
+ * }
+ * ```
+ *
+ * @package App\Console\Commands
  */
 class SiteListDomains extends Command
 {
@@ -16,7 +40,7 @@ class SiteListDomains extends Command
      *
      * @var string
      */
-    protected $signature = 'spro:site:domains:list';
+    protected $signature = 'cli:site:domains:list';
 
 
     /**

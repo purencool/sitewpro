@@ -7,12 +7,12 @@ use Illuminate\Console\Command;
 /**
  * Class Help
  *
- * The `Sitenpro:help` console command displays detailed help information
+ * The `cli:help` console command displays detailed help information
  * about the application, its available commands, and usage instructions.
  *
  * ## Usage
  * ```
- * php artisan Sitenpro:help
+ * php artisan cli:help
  * ```
  *
  * ## Options
@@ -20,10 +20,10 @@ use Illuminate\Console\Command;
  *
  * ## Example Output
  * ```
- * Sitenpro Help
- * -------------
+ * Application Help
+ * -----------------------------
  * Available commands:
- *   Sitenpro:help Show this help message
+ *   cli:help Show this help message
  * ```
  *
  * @package App\Console\Commands
@@ -35,7 +35,7 @@ class Help extends Command
      *
      * @var string
      */
-    protected $signature = 'spro:help';
+    protected $signature = 'cli:help';
 
     /**
      * The console command description.
@@ -52,10 +52,10 @@ class Help extends Command
     public function handle()
     {
         $this->line('-------------------------------------');
-        $this->info('Sitenpro Help');
+        $this->info('Help');
         $this->line('-------------------------------------');
         $this->line('Available commands:');
-        $this->line('Sitenpro:help  Show this help message');
+        $this->line('cli:help  Show this help message');
         $this->line('-------------------------------------');
         return 0;
     }

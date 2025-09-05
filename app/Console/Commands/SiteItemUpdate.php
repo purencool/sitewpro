@@ -4,6 +4,35 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\Services\AppConfigurationCreators\AppConfiguration;
 
+/**
+ * Class SiteItemUpdate
+ *
+ * The `cli:site:item:update` console command updates an existing item in the site configuration.
+ *
+ * ## Usage
+ * ```
+ * php artisan cli:site:item:update {default.domain} {environment} {json_string}
+ * ```
+ *
+ * ## Options
+ * This command accepts the following arguments:
+ * - `default.domain`: The domain of the site to update the configuration for.
+ * - `environment`: The environment to update the configuration for.
+ * - `json_string`: The JSON string containing the updated configuration.
+ *
+ * ## Example Output
+ * ```
+ * {
+ *   "domain": "example.com",
+ *   "settings": {
+ *     "theme": "default",
+ *     "language": "en"
+ *   }
+ * }
+ * ```
+ *
+ * @package App\Console\Commands
+ */
 class SiteItemUpdate extends Command
 {
     /**
@@ -11,7 +40,7 @@ class SiteItemUpdate extends Command
      *
      * @var string
      */
-    protected $signature = 'spro:site:item:update {default.domain} {environment} {json_string}';
+    protected $signature = 'cli:site:item:update {default.domain} {environment} {json_string}';
 
     /**
      * The console command description.

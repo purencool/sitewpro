@@ -5,6 +5,27 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\Services\AppConfigurationCreators\AppConfiguration;
 
+/**
+ * Class SiteDelete
+ *
+ * The `cli:site:delete` console command deletes a specific site configuration.
+ *
+ * ## Usage
+ * ```
+ * php artisan cli:site:delete {default.domain}
+ * ```
+ *
+ * ## Options
+ * This command accepts the following arguments:
+ * - `default.domain`: The domain of the site to delete the configuration for.
+ *
+ * ## Example Output
+ * ```
+ * Site configuration for domain "example.com" has been deleted.
+ * ```
+ *
+ * @package App\Console\Commands
+ */
 class SiteDelete extends Command
 {
     /**
@@ -12,7 +33,7 @@ class SiteDelete extends Command
      *
      * @var string
      */
-    protected $signature = 'spro:site:delete {domain}';
+    protected $signature = 'cli:site:delete {domain}';
 
     /**
      * The console command description.

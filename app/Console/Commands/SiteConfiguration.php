@@ -6,7 +6,31 @@ use Illuminate\Console\Command;
 use App\Services\AppConfigurationCreators\AppConfiguration;
 
 /**
+ * Class SiteConfiguration
  *
+ * The `cli:site:config` console command displays the configuration for a specific site.
+ *
+ * ## Usage
+ * ```
+ * php artisan cli:site:config {default.domain}
+ * ```
+ *
+ * ## Options
+ * This command accepts the following arguments:
+ * - `default.domain`: The domain of the site to retrieve the configuration for.
+ *
+ * ## Example Output
+ * ```
+ * {
+ *   "domain": "example.com",
+ *   "settings": {
+ *     "theme": "default",
+ *     "language": "en"
+ *   }
+ * }
+ * ```
+ *
+ * @package App\Console\Commands
  */
 class SiteConfiguration extends Command
 {
@@ -15,8 +39,7 @@ class SiteConfiguration extends Command
      *
      * @var string
      */
-    protected $signature = 'spro:site:config {default.domain?}';
-
+    protected $signature = 'cli:site:config {default.domain?}';
 
     /**
      * The console command description.
