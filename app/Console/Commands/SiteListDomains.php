@@ -55,13 +55,19 @@ class SiteListDomains extends Command
      */
     public function handle(): void
     {
-        $request = Request::create(
-           '/', 
-           'GET', 
-           [
+        $jsonData = json_encode([
             'response_format' => 'raw',
-            'request_type' => 'domains_list'
-           ]
+            'request_type' => 'domains_list',
+        ]);
+
+        $request = Request::create(
+            '/', 
+            'GET', 
+            [],
+            [], 
+            [], 
+            ['CONTENT_TYPE' => 'application/json'], 
+            $jsonData 
         );
 
         $creation = new AppRestApi();

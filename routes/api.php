@@ -1,2 +1,2 @@
 <?php
-Route::get('/api', [AppRestApi::class, 'requestHandler']);
+Route::get('/api', [App\Http\Controllers\Controller::class, 'RequestAPI']);

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -9,14 +10,33 @@ use Illuminate\Http\Request;
 use App\Services\AppConfigurationCreators\AppConfiguration;
 
 
-
+/**
+ * Class Controller
+ *
+ * This is the base controller class that other controllers extend.
+ *
+ * It includes methods for handling API requests and routing them to the appropriate services.
+ *
+ * @package App\Http\Controllers
+ */
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
+    /**
+    * Handle incoming API requests.
+    */
+    public function RequestAPI(Request $request)
+    {
+       return $this->RequestHandler($request);
+    }
+
+    /**
+    * Handle incoming requests. 
+    */
     public function RequestHandler(Request $request)
     {
-        $default = $request->all();
+        $default = $request->json()->all();
         if (!isset($default['request_type'])) {
             return response()->json(['status' => 'error', 'message' => 'No type specified.'], 400);
         }
