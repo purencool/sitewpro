@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Services\EnvironmentVariables;
 use Illuminate\Console\Command;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller as AppRestApi;
 
 /**
@@ -42,7 +43,6 @@ class SiteListDomains extends Command
      */
     protected $signature = 'cli:site:domains:list';
 
-
     /**
      * The console command description.
      *
@@ -55,7 +55,18 @@ class SiteListDomains extends Command
      */
     public function handle(): void
     {
+        $request = Request::create(
+           '/', 
+           'GET', 
+           [
+            'response_format' => 'raw',
+            'request_type' => 'domains_list'
+           ]
+        );
+
         $creation = new AppRestApi();
-        $this->info(json_encode($creation->RequestHandler(),JSON_PRETTY_PRINT));
+        $this->info(
+            json_encode($creation->RequestHandler($request),JSON_PRETTY_PRINT)
+        );
     }
 }
