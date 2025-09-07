@@ -11,7 +11,7 @@ if [[ "$1" == "debian" ]]; then
   sudo apt-get update & sudo apt upgrade
 
   # Install default packages.
-  sudo apt-get install git php php-cli php-curl php-xml p7zip-full p7zip-rar ca-certificates curl -y
+  sudo apt-get install git php php-cli php-curl php-xml p7zip-full p7zip-rar ca-certificates php-sqlite3 curl -y
 
   # Setup docker
   sudo install -m 0755 -d /etc/apt/keyrings
@@ -41,7 +41,30 @@ if [[ "$1" == "debian" ]]; then
   cd ./app
   cp .env.example .env
   /usr/local/bin/composer update
+  
+  ##
+  # Generate application key
+  ##
+  php artisan key:generate
 
+  ##
+  # Set database connection to sqlite
+  ##
+  pwd_path=$(pwd)
+  touch $pwd_path/../hosting/database.sqlite
+  chmod 777 $pwd_path/../hosting/database.sqlite
+  echo "DB_CONNECTION=sqlite" >> .env
+  echo "DB_DATABASE=$pwd_path/../hosting/database.sqlite" >> .env
+
+  ##
+  #  artisan table creation 
+  ##
+  php artisan session:table
+  php artisan migrate
+
+  ##
+  #  Set up default site
+  ##
   echo "Do you want to install examples.com as a test site now? (y/n)"
   read install_site
   if [[ "$install_site" == "y" || "$install_site" == "Y" ]]; then

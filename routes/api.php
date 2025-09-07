@@ -1,2 +1,4 @@
 <?php
-Route::get('/api', [App\Http\Controllers\Controller::class, 'RequestAPI']);
+use Illuminate\Support\Facades\Route;
+
+Route::get('/', [App\Http\Controllers\Controller::class, 'RequestAPI']);

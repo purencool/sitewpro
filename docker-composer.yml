@@ -1,0 +1,13 @@
+services:
+  default_html:
+    image: php:8.3.0-apache
+    ports:
+      - "8000:80"
+    volumes:
+      - ./public:/var/www/html
+      - ./vendor:/var/www/vendor
+      - ./bootstrap:/var/www/bootstrap
+      - ./app:/var/www/app
+      - ./routes:/var/www/routes
+      - ./config:/var/www/config
+      - ./storage:/var/www/storage

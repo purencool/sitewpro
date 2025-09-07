@@ -66,3 +66,19 @@ php phpDocumentor.phar run
 
 ## Installation
 curl -O https://raw.githubusercontent.com/purencool/sitewpro/refs/heads/main/install.sh && bash ./install.sh debian
+
+
+## App development
+#### Servers
+```
+php artisan serve
+```
+or docker
+```
+docker compose -f docker-composer.yml up
+```
+
+#### End point tests
+```
+curl  http://localhost:8000/api -H "Content-Type: application/json" -d '{"response_format":"raw","request_type":"domains_list"}'
+```
