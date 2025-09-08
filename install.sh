@@ -49,8 +49,10 @@ if [[ "$1" == "debian" ]]; then
 
   ##
   # Set database connection to sqlite
+  # @todo: this should be rely on using the cli console or artisanand using more flexible options.
   ##
   pwd_path=$(pwd)
+  mkdir -p $pwd_path/../hosting
   touch $pwd_path/../hosting/database.sqlite
   chmod 777 $pwd_path/../hosting/database.sqlite
   echo "DB_CONNECTION=sqlite" >> .env

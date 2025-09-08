@@ -47,9 +47,18 @@ class Controller extends BaseController
 
         $config = new AppConfiguration();
         switch ($default['request_type']) {
-            case 'domains_list':
+            case 'sites_domains_list':
                 $return = $config->getListDomains();
                 break;
+                
+            case 'sites_item_update':
+                $return = $config->update(
+                    $default['request_data']['default.domain'],
+                    $default['request_data']['user'],
+                    $default['request_data']['environment'],
+                );
+                break;
+
             default:
                 return response()->json(['status' => 'error', 'message' => 'Invalid retype specified.'], 400);
         }

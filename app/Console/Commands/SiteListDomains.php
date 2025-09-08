@@ -57,7 +57,7 @@ class SiteListDomains extends Command
     {
         $jsonData = json_encode([
             'response_format' => 'raw',
-            'request_type' => 'domains_list',
+            'request_type' => 'sites_domains_list',
         ]);
 
         $request = Request::create(
