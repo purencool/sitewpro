@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\AppConfigurationCreators;
+namespace App\Services\AppSitesConfiguration;
 
 use App\Services\EnvironmentVariables;
 

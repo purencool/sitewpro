@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Services\AppConfigurationCreators\Items;
+namespace App\Services\AppSitesConfiguration\Items;
 
 
-use App\Services\AppConfigurationCreators\SiteConfiguration;
+use App\Services\AppSitesConfiguration\SiteConfiguration;
 
 /**
  * Represents a site configuration.

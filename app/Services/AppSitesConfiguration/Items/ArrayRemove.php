@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\AppConfigurationCreators\Items;
+namespace App\Services\AppSitesConfiguration\Items;
 
 
 /**
