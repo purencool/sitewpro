@@ -85,15 +85,5 @@ class SiteItemUpdate extends Command
         $this->info(
             json_encode($creation->RequestHandler($request),JSON_PRETTY_PRINT)
         );
-        
-        
-        
-        $this->info($creation->update(
-            $resultsFromTheQuestions['default.domain'],
-            $resultsFromTheQuestions["user"],
-            $resultsFromTheQuestions['environment'],
-        )
-        );
-
     }
 }

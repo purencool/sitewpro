@@ -4,7 +4,7 @@ namespace App\Console\Commands;
 
 use App\Services\EnvironmentVariables;
 use Illuminate\Console\Command;
-use App\Services\AppConfigurationCreators\AppConfiguration;
+use App\Services\AppConfiguration;
 
 /**
  * Class SiteDomains

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\AppConfigurationCreators;
+namespace App\Services;
 
 use App\Services\AppConfigurationCreators\Items\ArrayRemove;
 use App\Services\AppConfigurationCreators\Items\ArrayUpdate;
@@ -83,5 +83,17 @@ class AppConfiguration
      */    public function getListDomains(): array
     {
         return (new SiteConfiguration())->getListDomains();
+    }
+
+    /**
+     * Build all containers for all sites.
+     *
+     * @return array
+     */    
+    public function buildContainers(): array
+    {
+        return ["starting build containers for all sites..."];
+       // $manager = new HostingEnvironment();
+       // return $manager->buildContainersForAllSites();  
     }
 }

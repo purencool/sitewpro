@@ -7,7 +7,7 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Http\Request;
-use App\Services\AppConfigurationCreators\AppConfiguration;
+use App\Services\AppConfiguration;
 
 
 /**
@@ -46,9 +46,9 @@ class Controller extends BaseController
         }
 
         $config = new AppConfiguration();
-        switch ($default['request_type']) {
-            case 'sites_domains_list':
-                $return = $config->getListDomains();
+        switch ($default['request_type']) {   
+            case 'containers_build':
+                $return = $config->buildContainers();
                 break;
                 
             case 'sites_item_update':

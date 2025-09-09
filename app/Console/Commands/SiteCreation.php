@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use App\Services\AppConfigurationCreators\AppConfiguration;
+use App\Services\AppConfiguration;
 
 /**
  * Class SiteCreation
