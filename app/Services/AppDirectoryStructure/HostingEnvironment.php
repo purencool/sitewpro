@@ -59,8 +59,8 @@ class HostingEnvironment
      */
     public function createConfigDirectory(): bool
     {
-        if (!is_dir($this->envVar->getHostingSiteBaseDirectoryPath()."/.config")) {
-            return mkdir($this->envVar->getHostingSiteBaseDirectoryPath()."/.config");
+        if (!is_dir($this->envVar->getHostingSiteBaseDirectoryPath()."/config")) {
+            return mkdir($this->envVar->getHostingSiteBaseDirectoryPath()."/config");
         }
         return true;
     }
@@ -72,8 +72,8 @@ class HostingEnvironment
      */
     public function destroyConfigDirectory(): bool
     {
-        if (is_dir($this->envVar->getHostingSiteBaseDirectoryPath()."/.config")) {
-            return rmdir($this->envVar->getHostingSiteBaseDirectoryPath()."/.config");
+        if (is_dir($this->envVar->getHostingSiteBaseDirectoryPath()."/config")) {
+            return rmdir($this->envVar->getHostingSiteBaseDirectoryPath()."/config");
         }
         return true;
     }
@@ -86,8 +86,8 @@ class HostingEnvironment
      */
     public function createContainersDirectory(): bool
     {
-        if (!is_dir($this->envVar->getHostingSiteBaseDirectoryPath()."/.config/containers")) {
-            return mkdir($this->envVar->getHostingSiteBaseDirectoryPath()."/.config/containers");
+        if (!is_dir($this->envVar->getHostingSiteBaseDirectoryPath()."/config/containers")) {
+            return mkdir($this->envVar->getHostingSiteBaseDirectoryPath()."/config/containers");
         }
         return true;
     }
@@ -99,8 +99,8 @@ class HostingEnvironment
      */
     public function destroyContainersDirectory(): bool
     {
-        if (is_dir($this->envVar->getHostingSiteBaseDirectoryPath()."/.config/containers")) {
-            return rmdir($this->envVar->getHostingSiteBaseDirectoryPath()."/.config/containers");
+        if (is_dir($this->envVar->getHostingSiteBaseDirectoryPath()."/config/containers")) {
+            return rmdir($this->envVar->getHostingSiteBaseDirectoryPath()."/config/containers");
         }
         return true;
     }
