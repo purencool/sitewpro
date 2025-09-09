@@ -6,6 +6,7 @@ use App\Services\AppSitesConfiguration\Items\ArrayRemove;
 use App\Services\AppSitesConfiguration\Items\ArrayUpdate;
 use App\Services\AppSitesConfiguration\SiteConfiguration;
 use App\Services\AppDirectoryStructure\HostingEnvironment;
+use App\Services\AppContainerConfiguration\ContainerConfiguration;
 
 /**
  *
@@ -97,11 +98,9 @@ class AppConfiguration
      * Build all containers for all sites.
      *
      * @return array
-     */    
-    public function buildContainers(): array
+     */
+    public function buildAllContainers(): array
     {
-        return ["starting build containers for all sites..."];
-       // $manager = new HostingEnvironment();
-       // return $manager->buildContainersForAllSites();  
+        return (new ContainerConfiguration())->generate('all');
     }
 }

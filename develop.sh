@@ -32,3 +32,4 @@ php artisan migrate
 #  Set up default site
 ##
 php artisan cli:site:creation "examples.com"
+php artisan cli:site:config "examples.com" 

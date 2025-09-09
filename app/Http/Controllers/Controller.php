@@ -47,8 +47,8 @@ class Controller extends BaseController
 
         $config = new AppConfiguration();
         switch ($default['request_type']) {   
-            case 'containers_build':
-                $return = $config->buildContainers();
+            case 'build_containers':
+                $return = $config->buildAllContainers();
                 break;
                 
             case 'sites_item_update':
