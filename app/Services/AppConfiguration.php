@@ -40,13 +40,20 @@ class AppConfiguration
      * @param string $environment
      * @return string
      */
-    public function update(string $siteName, array $arrayUpdates, string $environment = 'all'): string
+    public function update(string $siteName, array $arrayUpdates, string $environment = 'all'): array
     {
-        $siteArray = (new SiteConfiguration())->getSitesConfiguration($siteName);
+        if(empty($arrayUpdates)) {
+            return ["No updates were made to $siteName."];
+        }
 
+        $siteArray = (new SiteConfiguration())->getSitesConfiguration($siteName);
         $upDatedArray = (new ArrayUpdate())->update($siteArray, $arrayUpdates, $environment);
         (new SiteConfiguration())->setDefaultConfiguration($upDatedArray);
-        return json_encode((new SiteConfiguration())->getSitesConfiguration($siteName)[$environment], JSON_PRETTY_PRINT);
+        
+        if($environment != 'all') {
+            return (new SiteConfiguration())->getSitesConfiguration($siteName)[$environment];
+        }
+        return (new SiteConfiguration())->getSitesConfiguration($siteName);
     }
 
     /**
@@ -63,7 +70,7 @@ class AppConfiguration
         $cleaner->remove($arrayUpdates['path'], $arrayUpdates['item']);
         $siteArray[$environment]['user'] = $cleaner->getArray();
          (new SiteConfiguration())->setDefaultConfiguration($siteArray);
-         return json_encode($siteArray[$environment], JSON_PRETTY_PRINT);
+         return $siteArray[$environment];
     }
 
     /**

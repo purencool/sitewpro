@@ -57,6 +57,59 @@ class HostingEnvironment
      *
      * @return bool
      */
+    public function createConfigDirectory(): bool
+    {
+        if (!is_dir($this->envVar->getHostingSiteBaseDirectoryPath()."/.config")) {
+            return mkdir($this->envVar->getHostingSiteBaseDirectoryPath()."/.config");
+        }
+        return true;
+    }
+
+    /**
+     * Destroy a directory at the given path if it does not exist.
+     *
+     * @return bool
+     */
+    public function destroyConfigDirectory(): bool
+    {
+        if (is_dir($this->envVar->getHostingSiteBaseDirectoryPath()."/.config")) {
+            return rmdir($this->envVar->getHostingSiteBaseDirectoryPath()."/.config");
+        }
+        return true;
+    }
+
+
+    /**
+     * Create a directory at the given path if it does not exist.
+     *
+     * @return bool
+     */
+    public function createContainersDirectory(): bool
+    {
+        if (!is_dir($this->envVar->getHostingSiteBaseDirectoryPath()."/.config/containers")) {
+            return mkdir($this->envVar->getHostingSiteBaseDirectoryPath()."/.config/containers");
+        }
+        return true;
+    }
+
+    /**
+     * Destroy a directory at the given path if it does not exist.
+     *
+     * @return bool
+     */
+    public function destroyContainersDirectory(): bool
+    {
+        if (is_dir($this->envVar->getHostingSiteBaseDirectoryPath()."/.config/containers")) {
+            return rmdir($this->envVar->getHostingSiteBaseDirectoryPath()."/.config/containers");
+        }
+        return true;
+    }
+
+    /**
+     * Create a directory at the given path if it does not exist.
+     *
+     * @return bool
+     */
     public function createEnvironmentDirectories(): bool
     {
         $environmentArr = (new EnvironmentVariables())->getHostingSiteEnvironmentsArray();

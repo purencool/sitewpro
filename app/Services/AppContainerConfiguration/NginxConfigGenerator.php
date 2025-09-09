@@ -20,29 +20,11 @@ class NginxConfigGenerator
     private array $serverNames;
 
     /**
-     * The generated configuration array.
-     *
-     * @var array
-     */
-    private array $config;
-
-    /**
-     * Constructor.
-     *
-     * @param array $serverNames The array of server names to generate the configuration for.
-     */
-    public function __construct(array $serverNames)
-    {
-        $this->serverNames = $serverNames;
-        $this->config = [];
-    }
-
-    /**
      * Generates the Nginx configuration array for each server name in the array.
      *
      * @return array
      */
-    public function generateConfig(): array
+    public function generateNginxConfig(): array
     {
         foreach ($this->serverNames as $serverName) {
             $this->config[] = [

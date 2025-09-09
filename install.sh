@@ -28,6 +28,11 @@ if [[ "$1" == "debian" ]]; then
   sudo docker run hello-world
 
   ##
+  # Install directory structure manager.
+  ##
+  ./appcli cli:install
+
+  ##
   # Install composer.
   ##
   php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
@@ -52,11 +57,16 @@ if [[ "$1" == "debian" ]]; then
   # @todo: this should be rely on using the cli console or artisanand using more flexible options.
   ##
   pwd_path=$(pwd)
-  mkdir -p $pwd_path/../hosting
-  touch $pwd_path/../hosting/database.sqlite
-  chmod 777 $pwd_path/../hosting/database.sqlite
-  echo "DB_CONNECTION=sqlite" >> .env
-  echo "DB_DATABASE=$pwd_path/../hosting/database.sqlite" >> .env
+  echo "Install sqlite for development purposes? (y/n)"
+  read install_sqlite
+  if [[ "$install_sqlite" == "y" || "$install_sqlite" == "Y" ]]; then
+    touch $pwd_path/../hosting/.config/database.sqlite
+    chmod 777 $pwd_path/../hosting/database.sqlite
+    echo "DB_CONNECTION=sqlite" >> .env
+    echo "DB_DATABASE=$pwd_path/../hosting/.config/database.sqlite" >> .env
+  else
+    echo "Installation of a database was skipped."
+  fi
 
   ##
   #  artisan table creation 
@@ -76,4 +86,4 @@ else
     echo "Installation was not completed"
 fi
 
-echo "Installation completed successfully. Change directory to app and run './cli' to see all available commands."
+echo "Installation completed successfully. Change directory into cd ./sitepro/app and run './cli' to see all available commands."
