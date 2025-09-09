@@ -44,9 +44,14 @@ if [[ "$1" == "debian" ]]; then
   /usr/local/bin/composer update
 
   ##
+  # Path
+  ##
+  pwd_path=$(pwd)
+
+  ##
   # Install directory structure manager.
   ##
-  ./appcli cli:install
+  $pwd_path/appcli cli:install
   
   ##
   # Generate application key
@@ -57,7 +62,7 @@ if [[ "$1" == "debian" ]]; then
   # Set database connection to sqlite
   # @todo: this should be rely on using the cli console or artisanand using more flexible options.
   ##
-  pwd_path=$(pwd)
+  
   echo "Install sqlite for development purposes? (y/n)"
   read install_sqlite
   if [[ "$install_sqlite" == "y" || "$install_sqlite" == "Y" ]]; then
