@@ -2,7 +2,7 @@
 
 namespace App\Services\AppDirectoryStructure;
 
-use App\Services\AppConfigurationCreators\SiteConfiguration;
+use App\Services\AppSitesConfiguration\SiteConfiguration;
 use App\Services\EnvironmentVariables;
 
 /**

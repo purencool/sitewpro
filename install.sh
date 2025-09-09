@@ -92,4 +92,4 @@ else
     echo "Installation was not completed"
 fi
 
-echo "Installation completed successfully. Change directory into cd ./sitepro/app and run './cli' to see all available commands."
+echo "Installation successfully completed. You can run the following command `cd ./sitenpro/app && ./cli`."
