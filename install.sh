@@ -26,11 +26,7 @@ if [[ "$1" == "debian" ]]; then
   sudo apt-get update
   sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
   sudo docker run hello-world
-
-  ##
-  # Install directory structure manager.
-  ##
-  ./appcli cli:install
+  sudo usermod -aG docker $USER
 
   ##
   # Install composer.
@@ -46,6 +42,11 @@ if [[ "$1" == "debian" ]]; then
   cd ./app
   cp .env.example .env
   /usr/local/bin/composer update
+
+  ##
+  # Install directory structure manager.
+  ##
+  ./appcli cli:install
   
   ##
   # Generate application key
