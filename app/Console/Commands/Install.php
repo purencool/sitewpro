@@ -21,7 +21,7 @@ use App\Services\AppDirectoryStructure\HostingEnvironment;
  *
  * @package App\Console\Commands
  */
-class SiteListDomains extends Command
+class Install extends Command
 {
     /**
      * The name and signature of the console command.
