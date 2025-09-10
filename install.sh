@@ -55,22 +55,23 @@ if [[ "$1" == "centos" ]]; then
 fi
 
 ##
-# Install application.
-##
-git clone https://github.com/purencool/sitewpro.git app
-cd ./app
-cp .env.example .env
-/usr/local/bin/composer update
-
-##
 # Application path.
 ##
 pwd_path=$(pwd)
 
 ##
+# Install application.
+##
+git clone https://github.com/purencool/sitewpro.git app
+mkdir hosting
+mkdir hosting/config
+cp $pwd_path/app/.env.example .env
+/usr/local/bin/composer $pwd_path/update
+
+##
 # Install hosting directory structure.
 ##
-$pwd_path/appcli cli:install
+$pwd_path/app/appcli cli:install
   
 ##
 # Generate application key
@@ -80,9 +81,9 @@ php artisan key:generate
 ##
 # Set database connection to database
 ##
-touch $pwd_path/../hosting/config/database.sqlite
+touch $pwd_path/hosting/config/database.sqlite
 echo "DB_CONNECTION=sqlite" >> .env
-echo "DB_DATABASE=$pwd_path/../hosting/config/database.sqlite" >> .env
+echo "DB_DATABASE=$pwd_path/hosting/config/database.sqlite" >> .env
 
 ##
 #  artisan table creation 

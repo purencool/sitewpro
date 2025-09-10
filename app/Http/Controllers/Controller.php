@@ -51,6 +51,10 @@ class Controller extends BaseController
                 $return = $config->buildAllContainers();
                 break;
                 
+            case 'sites_list_domains':
+                $return = $config->getListDomains();
+                break;
+                
             case 'sites_item_update':
                 $return = $config->update(
                     $default['request_data']['default.domain'],

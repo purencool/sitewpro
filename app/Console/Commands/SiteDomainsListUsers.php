@@ -7,13 +7,13 @@ use Illuminate\Console\Command;
 use App\Services\AppConfiguration;
 
 /**
- * Class SiteDomains
+ * Class SiteDomainsListUsers
  *
- * The `cli:site:domains` console command displays the domains for a specific site.
+ * The `cli:site:domains:users` console command displays the domains for a specific site.
  *
  * ## Usage
  * ```
- * php artisan cli:site:domains {default.domain}
+ * php artisan cli:site:domains:users {default.domain}
  * ```
  *
  * ## Options
@@ -33,14 +33,14 @@ use App\Services\AppConfiguration;
  *
  * @package App\Console\Commands
  */
-class SiteDomains extends Command
+class SiteDomainsListUsers extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'cli:site:domains {default.domain?}';
+    protected $signature = 'cli:site:domains:list:users {default.domain?}';
 
     /**
      * The console command description.

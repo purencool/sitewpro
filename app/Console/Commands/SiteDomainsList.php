@@ -34,7 +34,7 @@ use App\Http\Controllers\Controller as AppRestApi;
  *
  * @package App\Console\Commands
  */
-class SiteListDomains extends Command
+class SiteDomainsList extends Command
 {
     /**
      * The name and signature of the console command.
@@ -57,7 +57,7 @@ class SiteListDomains extends Command
     {
         $jsonData = json_encode([
             'response_format' => 'raw',
-            'request_type' => 'sites_domains_list',
+            'request_type' => 'sites_list_domains',
         ]);
 
         $request = Request::create(
