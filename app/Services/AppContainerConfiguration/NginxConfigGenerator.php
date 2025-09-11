@@ -108,13 +108,13 @@ class NginxConfigGenerator
             $nginxConfig .= $this->createNginxConfigBlock($this->serverNames) . "\n";
         }
 
-        $filePath = (new HostingEnvironment())->getContainersDirectoryPath();
-        file_put_contents($filePath.'/nginx.conf', $nginxConfig);
-        
+        $filePath = (new HostingEnvironment())->getContainersDirectoryPath(); 
+        $result = (new HostingEnvironment())->updateContainerFiles($filePath.'/nginx.conf', $nginxConfig);
         return [
             'domain_list' => $domainList,
             'nginx_config_path' => $filePath.'/nginx.conf',
-            'nginx_config' => $nginxConfig
+            'nginx_config' => $nginxConfig,
+            'status' => $result,
         ];
     }
 }

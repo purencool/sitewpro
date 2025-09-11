@@ -122,8 +122,8 @@ class HostingEnvironment
      */
     public function createContainersBackupDirectory(): bool
     {
-        if (!is_dir($this->envVar->getHostingSiteBaseDirectoryPath()."/config/containers/backup")) {
-            return mkdir($this->envVar->getHostingSiteBaseDirectoryPath()."/config/containers/backup");
+        if (!is_dir($this->envVar->getHostingSiteBaseDirectoryPath()."/config/backup")) {
+            return mkdir($this->envVar->getHostingSiteBaseDirectoryPath()."/config/backup");
         }
         return true;
     }
@@ -135,7 +135,7 @@ class HostingEnvironment
      */
     public function getContainersBackupDirectoryPath(): string
     {
-        return $this->envVar->getHostingSiteBaseDirectoryPath()."/config/containers/backup";
+        return $this->envVar->getHostingSiteBaseDirectoryPath()."/config/backup";
     }
 
     /**
@@ -145,8 +145,8 @@ class HostingEnvironment
      */
     public function destroyContainersBackupDirectory(): bool
     {
-        if (is_dir($this->envVar->getHostingSiteBaseDirectoryPath()."/config/containers/backup")) {
-            return rmdir($this->envVar->getHostingSiteBaseDirectoryPath()."/config/containers/backup");
+        if (is_dir($this->envVar->getHostingSiteBaseDirectoryPath()."/config/backup")) {
+            return rmdir($this->envVar->getHostingSiteBaseDirectoryPath()."/config/backup");
         }
         return true;
     }
@@ -255,5 +255,78 @@ class HostingEnvironment
             }
         }
         return true;
+    }
+
+    /**
+     * Create backup of container configuration.
+     *  
+     * @return array 
+     */
+    public function createContainerConfigBackup() : array
+    {
+        $sourceDir = $this->getContainersDirectoryPath(); 
+        $destinationDir = $this->getContainersBackupDirectoryPath(); 
+
+        // Generate a timestamped name for the compressed archive
+        $timestamp = date('Ymd_His'); 
+        $archiveName = basename($sourceDir) . '_' . $timestamp . '.zip';
+        $tempArchiveFilePath = sys_get_temp_dir() . '/' . $archiveName;
+        $finalArchiveFilePath = $destinationDir . '/' . $archiveName;
+
+        // Ensure destination directory exists
+        if (!is_dir($destinationDir)) {
+            mkdir($destinationDir, 0777, true);
+        }
+
+        // Create a ZIP archive
+        $zip = new \ZipArchive();
+        if ($zip->open($tempArchiveFilePath, \ZipArchive::CREATE | \ZipArchive::OVERWRITE) === TRUE) {
+
+            // Lamba function to add files and directories recursively
+            $addFilesToZip = function ($dir, $baseDir = '') use (&$zip, &$addFilesToZip) {
+                $files = new \RecursiveIteratorIterator(
+                    new \RecursiveDirectoryIterator($dir, \RecursiveDirectoryIterator::SKIP_DOTS),
+                    \RecursiveIteratorIterator::SELF_FIRST
+                );
+
+                foreach ($files as $file) {
+                    $relativePath = str_replace($baseDir, '', $file->getPathname());
+                    if ($file->isDir()) {
+                        $zip->addEmptyDir($relativePath);
+                    } else if ($file->isFile()) {
+                        $zip->addFile($file->getPathname(), $relativePath);
+                    }
+                }
+            };
+
+            $addFilesToZip($sourceDir, $sourceDir . '/');
+            $zip->close();
+            $return[] = ["Directory compressed successfully to: " . $tempArchiveFilePath ];
+
+            // Move the compressed archive to the final destination
+            if (rename($tempArchiveFilePath, $finalArchiveFilePath)) {
+                $return[] = ["Compressed archive moved to: " . $finalArchiveFilePath];
+            } else {
+                $return[] = ["Error moving the compressed archive."];
+                unlink($tempArchiveFilePath); 
+            }
+        } else {
+            $return[] = ["Error creating ZIP archive."];
+        }
+        return $return;
+    }
+
+    /**
+     * Update and backup container Files.
+     *
+     * @param string $path
+     * @param string $data
+     * @return array 
+     */
+    public function updateContainerFiles($path, $data) : array
+    {
+        $return = $this->createContainerConfigBackup();
+        file_put_contents($path, $data);
+        return $return;
     }
 }

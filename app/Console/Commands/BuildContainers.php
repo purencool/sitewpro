@@ -57,7 +57,7 @@ class BuildContainers extends Command
         );
 
         $creation = new AppRestApi();
-        print_r($creation->RequestHandler($request)); exit;
+        //print_r($creation->RequestHandler($request)); exit;
         $this->info(
             json_encode($creation->RequestHandler($request),JSON_PRETTY_PRINT)
         );
