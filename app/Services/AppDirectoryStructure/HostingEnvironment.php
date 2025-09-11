@@ -120,6 +120,42 @@ class HostingEnvironment
      *
      * @return bool
      */
+    public function createContainersBackupDirectory(): bool
+    {
+        if (!is_dir($this->envVar->getHostingSiteBaseDirectoryPath()."/config/containers/backup")) {
+            return mkdir($this->envVar->getHostingSiteBaseDirectoryPath()."/config/containers/backup");
+        }
+        return true;
+    }
+
+    /**
+     * Get the path to the containers directory.
+     *
+     * @return string
+     */
+    public function getContainersBackupDirectoryPath(): string
+    {
+        return $this->envVar->getHostingSiteBaseDirectoryPath()."/config/containers/backup";
+    }
+
+    /**
+     * Destroy a directory at the given path if it does not exist.
+     *
+     * @return bool
+     */
+    public function destroyContainersBackupDirectory(): bool
+    {
+        if (is_dir($this->envVar->getHostingSiteBaseDirectoryPath()."/config/containers/backup")) {
+            return rmdir($this->envVar->getHostingSiteBaseDirectoryPath()."/config/containers/backup");
+        }
+        return true;
+    }
+
+    /**
+     * Create a directory at the given path if it does not exist.
+     *
+     * @return bool
+     */
     public function createEnvironmentDirectories(): bool
     {
         $environmentArr = (new EnvironmentVariables())->getHostingSiteEnvironmentsArray();

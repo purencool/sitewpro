@@ -1,1 +1,1 @@
-Containers and orchestration tools used in production.
+Containers for testing.

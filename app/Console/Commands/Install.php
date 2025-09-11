@@ -47,5 +47,6 @@ class Install extends Command
         $manager->createEnvironmentDirectories();
         $manager->createConfigDirectory();
         $manager->createContainersDirectory();
+        $manager->createContainersBackupDirectory();
     }
 }

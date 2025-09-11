@@ -109,7 +109,7 @@ class NginxConfigGenerator
         }
 
         $filePath = (new HostingEnvironment())->getContainersDirectoryPath();
-        Storage::put($filePath.'/nginx.conf', $nginxConfig);
+        file_put_contents($filePath.'/nginx.conf', $nginxConfig);
         
         return [
             'domain_list' => $domainList,
