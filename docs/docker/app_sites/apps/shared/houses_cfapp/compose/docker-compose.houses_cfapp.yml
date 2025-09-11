@@ -1,7 +1,0 @@
-services:
-  houses_cfapp:
-    image: httpd:alpine3.22
-    ports:
-      - "8081:80"
-    volumes:
-      - ./apps/shared/houses_cfapp/code/docroot:/usr/local/apache2/htdocs

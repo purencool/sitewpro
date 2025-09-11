@@ -1,7 +1,0 @@
-services:
-  default_php:
-    image: php:8.3-apache
-    ports:
-      - "8081:80"
-    volumes:
-      - ./shared/php:/var/www/html

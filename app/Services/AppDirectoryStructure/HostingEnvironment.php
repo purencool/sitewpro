@@ -93,6 +93,16 @@ class HostingEnvironment
     }
 
     /**
+     * Get the path to the containers directory.
+     *
+     * @return string
+     */
+    public function getContainersDirectoryPath(): string
+    {
+        return $this->envVar->getHostingSiteBaseDirectoryPath()."/config/containers";
+    }
+
+    /**
      * Destroy a directory at the given path if it does not exist.
      *
      * @return bool

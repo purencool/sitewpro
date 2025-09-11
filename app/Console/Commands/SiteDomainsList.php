@@ -2,7 +2,6 @@
 
 namespace App\Console\Commands;
 
-use App\Services\EnvironmentVariables;
 use Illuminate\Console\Command;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller as AppRestApi;
