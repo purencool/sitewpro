@@ -3,7 +3,8 @@
 namespace App\Services\AppContainerConfiguration;
 
 
-use App\Services\AppContainerConfiguration\NginxConfigGenerator;
+use App\Services\AppContainerConfiguration\ProxyGenerator;
+use App\Services\AppDirectoryStructure\HostingEnvironment;
 
 /**
  * Class ContainerConfiguration
@@ -23,7 +24,10 @@ class ContainerConfiguration
     public function generate(string $type = 'all'): array
     {
         return ['configuration' => [
-            'proxy' => (new NginxConfigGenerator())->generateNginxConfig()
+            'proxy' => (new ProxyGenerator())->generateProxyConfiguration(),
+            'start' => (new StartGenerator())->generateStartConfiguration(),
+            'stop' => (new StopGenerator())->generateStopConfiguration(),
+            'backup' => (new HostingEnvironment())->createContainerConfigBackup()
         ]];
     }
 }

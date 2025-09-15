@@ -58,6 +58,11 @@ class SiteConfiguration extends Command
         $creation = new AppConfiguration();
         $resultsFromTheQuestions['default.domain'] = $this->argument('default.domain');
         $results = $creation->getConfiguration($resultsFromTheQuestions['default.domain']);
-       
+        $this->info(
+            json_encode(
+                $results,
+                JSON_PRETTY_PRINT
+            )
+        );
     }
 }

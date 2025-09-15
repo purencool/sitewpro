@@ -10,13 +10,13 @@ use App\Services\JsonRequestObject;
 use Symfony\Component\Yaml\Yaml;
 
 /**
- * Class ProxyGenerator
+ * Class DnsGenerator
  *
  * This class generates proxy configuration for multiple server names.
  *
  * @package App\Services\AppConfigurationCreator
  */
-class ProxyGenerator
+class DnsGenerator
 {
     
     /**
@@ -106,10 +106,10 @@ class ProxyGenerator
             $proxyConfig .= $this->createProxyConfigBlock($this->serverNames) . "\n";
         }
 
-        (new HostingEnvironment())->updateContainerFiles('proxy', 'nginx.conf', $proxyConfig);
+        (new HostingEnvironment())->updateContainerFiles('dns', 'nginx.conf', $proxyConfig);
 
         return [
-            'proxy_config_path' => 'nginx.conf',
+            'proxy_config_path' => $filePath.'/nginx.conf',
             'proxy_config' => $proxyConfig,
         ];
     }
@@ -123,7 +123,7 @@ class ProxyGenerator
     {
        $config = Yaml::dump($this->proxyYamlArr, 4, 2, Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK);
      
-        (new HostingEnvironment())->updateContainerFiles('proxy','docker-composer_proxy.yml', $config);
+        (new HostingEnvironment())->updateContainerFiles('dns','docker-composer_proxy.yml', $config);
         return [];
     }
 

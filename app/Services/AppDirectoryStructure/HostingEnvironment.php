@@ -319,14 +319,20 @@ class HostingEnvironment
     /**
      * Update and backup container Files.
      *
-     * @param string $path
+     * @param string $directory
+     * @param string $fileName
      * @param string $data
      * @return array 
      */
-    public function updateContainerFiles($path, $data) : array
+    public function updateContainerFiles($directory,$fileName,$data) : array
     {
-        $return = $this->createContainerConfigBackup();
-        file_put_contents($path, $data);
-        return $return;
+       
+        $dirPath = $this->getContainersDirectoryPath(); 
+        if(!is_dir($dirPath.'/'.$directory)){
+            mkdir($dirPath.'/'.$directory);
+        }
+     
+        file_put_contents($dirPath.'/'.$directory.'/'.$fileName, $data);
+        return ['Configuration update to '.$fileName];
     }
 }
