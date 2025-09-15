@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use App\Services\JsonRequestObject;
 use App\Services\AppConfiguration;
 
 /**
@@ -95,6 +96,17 @@ class SiteCreation extends Command
         $databaseManagementSystem = $this->ask('What are the database names need for this application separate with a comma?');
         $resultsFromTheQuestions['database_names'] = $databaseManagementSystem;
 
-        $this->info($creation->create($resultsFromTheQuestions));
+        $this->info(
+            json_encode(
+                (new JsonRequestObject())->getResults(
+                    [
+                        'response_format' => 'raw',
+                        'request_type' => 'sites_creation',
+                        'request_data' => $resultsFromTheQuestions,
+                    ]
+                ),
+                JSON_PRETTY_PRINT
+            )
+        );
     }
 }

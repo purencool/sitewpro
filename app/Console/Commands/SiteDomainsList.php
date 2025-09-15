@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Http\Request;
+use App\Services\JsonRequestObject;
 use App\Http\Controllers\Controller as AppRestApi;
 
 /**
@@ -23,12 +24,10 @@ use App\Http\Controllers\Controller as AppRestApi;
  * ## Example Output
  * ```
  * {
- *   "domain": "example.com",
- *   "settings": {
- *     "theme": "default",
- *     "language": "en"
- *   }
- * }
+ *    "environment": "production",
+ *    "site": "test.com",
+ *    "domain": "test-com-production.test.app"
+ *  }
  * ```
  *
  * @package App\Console\Commands
@@ -53,25 +52,17 @@ class SiteDomainsList extends Command
      * @return 
      */
     public function handle(): void
-    {
-        $jsonData = json_encode([
-            'response_format' => 'raw',
-            'request_type' => 'sites_list_domains',
-        ]);
-
-        $request = Request::create(
-            '/', 
-            'GET', 
-            [],
-            [], 
-            [], 
-            ['CONTENT_TYPE' => 'application/json'], 
-            $jsonData 
-        );
-
-        $creation = new AppRestApi();
+    { 
         $this->info(
-            json_encode($creation->RequestHandler($request),JSON_PRETTY_PRINT)
+            json_encode(
+                (new JsonRequestObject())->getResults(
+                    [ 
+                        'request_type' => 'sites_list_domains',
+                        'response_format' => 'raw'
+                    ]
+                ), 
+                JSON_PRETTY_PRINT
+            )
         );
     }
 }

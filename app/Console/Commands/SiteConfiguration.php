@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use App\Services\JsonRequestObject;
 use App\Services\AppConfiguration;
 
 /**
@@ -53,7 +54,10 @@ class SiteConfiguration extends Command
      */
     public function handle(): void
     {
-        $results = (new AppConfiguration())->getConfiguration($this->argument('default.domain'));
-        $this->info(json_encode($results,JSON_PRETTY_PRINT));
+        $resultsFromTheQuestions = [];
+        $creation = new AppConfiguration();
+        $resultsFromTheQuestions['default.domain'] = $this->argument('default.domain');
+        $results = $creation->getConfiguration($resultsFromTheQuestions['default.domain']);
+       
     }
 }

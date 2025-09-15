@@ -3,6 +3,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Http\Request;
+use App\Services\JsonRequestObject;
 use App\Http\Controllers\Controller as AppRestApi;
 
 /**
@@ -56,12 +57,11 @@ class SiteItemUpdate extends Command
     public function handle(): void
     {
         $resultsFromTheQuestions = [];
-        $creation = new AppConfiguration();
         $resultsFromTheQuestions['default.domain'] = $this->argument('default.domain');
         $resultsFromTheQuestions['user'] = json_decode( $this->argument('json_string'), true);
         $resultsFromTheQuestions['environment'] = $this->argument('environment');
         
-        $jsonData = json_encode([
+        $jsonData = [
             'response_format' => 'raw',
             'request_type' => 'sites_item_update',
             'request_data' => [
@@ -69,21 +69,15 @@ class SiteItemUpdate extends Command
                 'environment' => $resultsFromTheQuestions['environment'],
                 'user' => $resultsFromTheQuestions['user'],
             ],
-        ]);
+        ];
 
-        $request = Request::create(
-            '/', 
-            'GET', 
-            [],
-            [], 
-            [], 
-            ['CONTENT_TYPE' => 'application/json'], 
-            $jsonData 
-        );
-
-        $creation = new AppRestApi();
         $this->info(
-            json_encode($creation->RequestHandler($request),JSON_PRETTY_PRINT)
+            json_encode(
+                (new JsonRequestObject())->getResults(
+                    $jsonData
+                ),
+                JSON_PRETTY_PRINT
+            )
         );
     }
 }

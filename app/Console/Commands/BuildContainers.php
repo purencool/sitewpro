@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Services\EnvironmentVariables;
 use Illuminate\Console\Command;
 use Illuminate\Http\Request;
+use App\Services\JsonRequestObject;
 use App\Http\Controllers\Controller as AppRestApi;
 
 /**
@@ -41,25 +42,19 @@ class BuildContainers extends Command
      */
     public function handle(): void
     {
-        $jsonData = json_encode([
+        $jsonData =[
             'response_format' => 'raw',
             'request_type' => 'build_containers',
-        ]);
+        ];
 
-        $request = Request::create(
-            '/', 
-            'GET', 
-            [],
-            [], 
-            [], 
-            ['CONTENT_TYPE' => 'application/json'], 
-            $jsonData 
-        );
-
-        $creation = new AppRestApi();
-        //print_r($creation->RequestHandler($request)); exit;
-        $this->info(
-            json_encode($creation->RequestHandler($request),JSON_PRETTY_PRINT)
+     
+       $this->info(
+            json_encode(
+                (new JsonRequestObject())->getResults(
+                    $jsonData
+                ),
+                JSON_PRETTY_PRINT
+            )
         );
     }
 }

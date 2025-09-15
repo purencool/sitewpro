@@ -6,15 +6,16 @@ use Illuminate\Http\Request;
 use App\Services\AppDirectoryStructure\HostingEnvironment;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Controller as AppRestApi;
+use App\Services\JsonRequestObject;
 
 /**
- * Class NginxConfigGenerator
+ * Class ProxyGenerator
  *
- * This class generates Nginx configuration for multiple server names.
+ * This class generates proxy configuration for multiple server names.
  *
  * @package App\Services\AppConfigurationCreator
  */
-class NginxConfigGenerator
+class ProxyGenerator
 {
     
     /**
@@ -58,63 +59,72 @@ class NginxConfigGenerator
      * @param int $indentLevel The current indentation level.
      * @return string The generated Nginx configuration block.
      */
-    protected function createNginxConfigBlock(array $config, int $indentLevel = 0): string
+    protected function createProxyConfigBlock(array $config, int $indentLevel = 0): string
     { 
         $indent = str_repeat('    ', $indentLevel);
-        $nginxConfig = '';
+        $pConfig = '';
 
         foreach ($config as $key => $value) {
             if (is_array($value)) {
-                $nginxConfig .= "{$indent}{$key} {\n";
-                $nginxConfig .= $this->createNginxConfigBlock($value, $indentLevel + 1);
-                $nginxConfig .= "{$indent}}\n";
+                $pConfig .= "{$indent}{$key} {\n";
+                $pConfig .= $this->createProxyConfigBlock($value, $indentLevel + 1);
+                $pConfig .= "{$indent}}\n";
             } else {
-                $nginxConfig .= "{$indent}{$key} {$value}\n";
+                $pConfig .= "{$indent}{$key} {$value}\n";
             }
         }
 
-        return $nginxConfig;
+        return $pConfig;
     }
 
+   
+    /**
+     * Create the proxy configuration for the Nginx server.
+     * 
+     * @return string
+     */
+    protected function proxyConfigCreation($domainList): string
+    {
+        $proxyConfig = '';
+        foreach ($domainList as $site) {
+            $this->serverNames['server']['server_name'] = $site['domain'] . ';';
+            $this->serverNames['server']['location /']['proxy_pass'] = 'http://' . $site['environment'] . '_cfapp:80;';
+            $proxyConfig .= $this->createNginxConfigBlock($this->serverNames) . "\n";
+        }
+
+        $filePath = (new HostingEnvironment())->getContainersDirectoryPath(); 
+        $result = (new HostingEnvironment())->updateContainerFiles($filePath.'/nginx.conf', $proxyConfig);
+
+        return [
+            'proxy_config_path' => $filePath.'/nginx.conf',
+            'proxy_config' => $proxyConfig,
+            'status' => $result,
+        ];
+    }
+
+    /**
+     * Create the proxy configuration for the Nginx server.
+     * 
+     * @return array
+     */
+    protected function proxyContainerCreation(): array
+    {
+  
+    }
 
     /**
      * Generates the Nginx configuration array for each server name in the array.
      *
      * @return array
      */
-    public function generateNginxConfig(): array
+    public function generateProxyConfiguration(): array
     {
-        $nginxConfig = '';
-        $jsonData = json_encode([
-            'response_format' => 'raw',
-            'request_type' => 'sites_list_domains',
-        ]);
 
-        $request = Request::create(
-            '/', 
-            'GET', 
-            [],
-            [], 
-            [], 
-            ['CONTENT_TYPE' => 'application/json'], 
-            $jsonData 
-        );
-
-        $creation = new AppRestApi();
-        $domainList = $creation->RequestHandler($request);
-        foreach ($domainList as $site) {
-            $this->serverNames['server']['server_name'] = $site['domain'] . ';';
-            $this->serverNames['server']['location /']['proxy_pass'] = 'http://' . $site['environment'] . '_cfapp:80;';
-            $nginxConfig .= $this->createNginxConfigBlock($this->serverNames) . "\n";
-        }
-
-        $filePath = (new HostingEnvironment())->getContainersDirectoryPath(); 
-        $result = (new HostingEnvironment())->updateContainerFiles($filePath.'/nginx.conf', $nginxConfig);
+        $domainList = (new JsonRequestObject())->getResults('sites_list_domains', 'raw');
         return [
             'domain_list' => $domainList,
-            'nginx_config_path' => $filePath.'/nginx.conf',
-            'nginx_config' => $nginxConfig,
-            'status' => $result,
+            'proxy' => $this->proxyConfigCreation($domainList),
+            'container' => $this->proxyContainerCreation(), 
         ];
     }
 }

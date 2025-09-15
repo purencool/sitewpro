@@ -22,8 +22,8 @@ class ContainerConfiguration
      */
     public function generate(string $type = 'all'): array
     {
-        return ['results' => [
-            'nginx' => (new NginxConfigGenerator())->generateNginxConfig()
+        return ['configuration' => [
+            'proxy' => (new NginxConfigGenerator())->generateNginxConfig()
         ]];
     }
 }

@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Services\EnvironmentVariables;
 use Illuminate\Console\Command;
+use App\Services\JsonRequestObject;
 use App\Services\AppConfiguration;
 
 /**
@@ -55,6 +56,20 @@ class SiteDomainsListUsers extends Command
     public function handle(): void
     {
         $results = (new AppConfiguration())->getDomains($this->argument('default.domain'));
-        $this->info(json_encode($results, JSON_PRETTY_PRINT));
+        $this->info(
+            json_encode(
+                (new JsonRequestObject())->getResults(
+                    [
+                        'request_type' => 'sites_domains_list_users',
+                        'response_format' => 'raw',
+                        'request_data' => [
+                            'default.domain' => $this->argument('default.domain'),
+                            'domains' => $results,
+                        ],
+                    ]
+                ),
+                JSON_PRETTY_PRINT
+            )
+        );
     }
 }

@@ -2,6 +2,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use App\Services\JsonRequestObject;
 use App\Services\AppConfiguration;
 
 /**
@@ -53,15 +54,24 @@ class SiteItemAdd extends Command
     public function handle(): void
     {
         $resultsFromTheQuestions = [];
-        $creation = new AppConfiguration();
         $resultsFromTheQuestions['default.domain'] = $this->argument('default.domain');
         $resultsFromTheQuestions['user'] = json_decode( $this->argument('json_string'), true);
         $resultsFromTheQuestions['environment'] = $this->argument('environment');
-        $this->info($creation->update(
-            $resultsFromTheQuestions['default.domain'],
-            $resultsFromTheQuestions["user"],
-            $resultsFromTheQuestions['environment'],
-          )
+        $this->info(
+            json_encode(
+                (new JsonRequestObject())->getResults(
+                    [
+                        'request_type' => 'sites_item_add',
+                        'response_format' => 'raw',
+                        'request_data' => [
+                            'default.domain' => $resultsFromTheQuestions['default.domain'],
+                            'environment' => $resultsFromTheQuestions['environment'],
+                            'user' => $resultsFromTheQuestions['user'],
+                        ],
+                    ]
+                ),
+                JSON_PRETTY_PRINT
+            )
         );
     }
 }

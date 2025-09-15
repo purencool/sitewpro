@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use App\Services\JsonRequestObject;
 use App\Services\AppConfiguration;
 
 /**
