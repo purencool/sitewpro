@@ -5,6 +5,9 @@ function help(){
     echo '--------------------------------------------------------------------------------------------------'
     echo ' Commands you can use.                                                                            '
     echo '--------------------------------------------------------------------------------------------------'
+    echo ' app:start                                                                                        '
+    echo ' app:stop                                                                                         '
+    echo ' app:update                                                                                       '
     echo ' build:containers      ./appcli cli:build:containers                                              '
     echo ' config                ./appcli cli:site:config {default.domain}                                  '
     echo ' config:find           ./appcli cli:site:config {default.domain} | jq ".[] | {string}"            '
@@ -20,8 +23,20 @@ function help(){
     echo ''
 }
 
+path=$(pwd)
+config_path=$path'/../hosting/config/containers'
+
 if [[ "$1" == "build:containers" ]]; then
    ./appcli cli:build:containers
+
+elif [[ "$1" == "app:start" ]]; then
+  bash "$(pwd)/../hosting/config/containers/start.sh" "$config_path"
+
+elif [[ "$1" == "app:stop" ]]; then
+  bash "$(pwd)/../hosting/config/containers/stop.sh" "$config_path"
+
+elif [[ "$1" == "app:update" ]]; then
+  bash "$(pwd)/maintain.sh" "$2"
 
 elif [[ "$1" == "config" ]]; then
   ./appcli cli:site:config $2

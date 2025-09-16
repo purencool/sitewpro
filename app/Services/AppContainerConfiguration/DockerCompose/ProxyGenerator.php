@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\AppContainerConfiguration;
+namespace App\Services\AppContainerConfiguration\DockerCompose;
 
 use Illuminate\Http\Request;
 use App\Services\AppDirectoryStructure\HostingEnvironment;
@@ -61,7 +61,7 @@ class ProxyGenerator
             'nginx' => [
                 'image' => 'nginx:latest',
                 'ports' => ['80:80'],
-                'volumes' => ['./nginx_http.conf:/etc/nginx/conf.d/default.conf:ro'],
+                'volumes' => ['./nginx.conf:/etc/nginx/conf.d/default.conf:ro'],
             ],
         ],
     ];

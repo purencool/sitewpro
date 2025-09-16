@@ -18,10 +18,15 @@ class ContainerConfiguration
 
     /**
      * Generate a Composer Compose file using a generator class.
+     * 
+     * @param $type 
+     *   Setting up for different types of containerisation.
+     * @param $dns
+     *   Setting up for different types of dns configuration
      *
      * @return array
      */
-    public function generate(string $type = 'all'): array
+    public function generate(string $type = 'docker_compose' , $dns = 'cordns'): array
     {
         return ['configuration' => [
             'proxy' => (new ProxyGenerator())->generateProxyConfiguration(),

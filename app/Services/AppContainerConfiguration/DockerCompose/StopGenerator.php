@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\AppContainerConfiguration;
+namespace App\Services\AppContainerConfiguration\DockerCompose;
 
 use App\Services\AppDirectoryStructure\HostingEnvironment;
 
@@ -22,7 +22,7 @@ class StopGenerator
     public function generateStopConfiguration(): array
     {
         $config = '#!/bin/bash 
-        docker stop $(docker ps -q)';
+        docker compose -f $1/proxy/docker-composer_proxy.yml down';
         $filePath = (new HostingEnvironment())->getContainersDirectoryPath(); 
         (new HostingEnvironment())->updateContainerFiles('','stop.sh', $config);
         return ["Built stop script."];

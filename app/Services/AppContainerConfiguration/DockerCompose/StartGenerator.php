@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\AppContainerConfiguration;
+namespace App\Services\AppContainerConfiguration\DockerCompose;
 
 use App\Services\AppDirectoryStructure\HostingEnvironment;
 
@@ -22,7 +22,7 @@ class StartGenerator
     public function generateStartConfiguration(): array
     {
         $config = '#!/bin/bash 
-        docker compose -f ./proxy/docker-composer_proxy.yml up -d';
+        docker compose -f $1/proxy/docker-composer_proxy.yml up -d';
         $filePath = (new HostingEnvironment())->getContainersDirectoryPath(); 
         (new HostingEnvironment())->updateContainerFiles('','start.sh', $config);
         return ["Built start script."];
