@@ -2,8 +2,10 @@
 
 namespace App\Services\AppContainerConfiguration;
 
-
-use App\Services\AppContainerConfiguration\ProxyGenerator;
+use App\Services\AppContainerConfiguration\DockerCompose\DnsGenerator;
+use App\Services\AppContainerConfiguration\DockerCompose\ProxyGenerator;
+use App\Services\AppContainerConfiguration\DockerCompose\StartGenerator;
+use App\Services\AppContainerConfiguration\DockerCompose\StopGenerator;
 use App\Services\AppDirectoryStructure\HostingEnvironment;
 
 /**
@@ -29,6 +31,7 @@ class ContainerConfiguration
     public function generate(string $type = 'docker_compose' , $dns = 'cordns'): array
     {
         return ['configuration' => [
+            'dns' => (new DnsGenerator())->generateConfiguration(),
             'proxy' => (new ProxyGenerator())->generateProxyConfiguration(),
             'start' => (new StartGenerator())->generateStartConfiguration(),
             'stop' => (new StopGenerator())->generateStopConfiguration(),
