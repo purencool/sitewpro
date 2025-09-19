@@ -61,7 +61,7 @@ class ProxyGenerator extends Generator
             'nginx' => [
                 'image' => 'nginx:latest',
                 'ports' => ['80:80'],
-                'volumes' => ['./nginx.conf:/etc/nginx/conf.d/default.conf:ro'],
+                'volumes' => ['./../proxy/nginx.conf:/etc/nginx/conf.d/default.conf:ro'],
             ],
         ],
     ];
@@ -90,7 +90,7 @@ class ProxyGenerator extends Generator
     }
 
     /**
-     * @inherit
+     * @inherited
      */
     public function fileName():string 
     {
