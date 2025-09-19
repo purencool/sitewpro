@@ -16,7 +16,7 @@ use Symfony\Component\Yaml\Yaml;
  *
  * @package App\Services\AppConfigurationCreator
  */
-class ProxyGenerator
+class ProxyGenerator extends Generator
 {
     
     /**
@@ -65,67 +65,7 @@ class ProxyGenerator
             ],
         ],
     ];
-
-    /**
-     * Recursively creates Nginx configuration blocks from an associative array.
-     *
-     * @param array $config The configuration array.
-     * @param int $indentLevel The current indentation level.
-     * @return string The generated Nginx configuration block.
-     */
-    protected function createProxyConfigBlock(array $config, int $indentLevel = 0): string
-    { 
-        $indent = str_repeat('    ', $indentLevel);
-        $pConfig = '';
-
-        foreach ($config as $key => $value) {
-            if (is_array($value)) {
-                $pConfig .= "{$indent}{$key} {\n";
-                $pConfig .= $this->createProxyConfigBlock($value, $indentLevel + 1);
-                $pConfig .= "{$indent}}\n";
-            } else {
-                $pConfig .= "{$indent}{$key} {$value}\n";
-            }
-        }
-
-        return $pConfig;
-    }
-
-   
-    /**
-     * Create the proxy configuration for the Nginx server.
-     * 
-     * @return array
-     */
-    protected function proxyConfigCreation($domainList): array
-    {
-        $proxyConfig = '';
-        foreach ($domainList as $site) {
-            $this->serverNames['server']['server_name'] = $site['domain'] . ';';
-            $this->serverNames['server']['location /']['proxy_pass'] = 'http://' . $site['environment'] . '_cfapp:80;';
-            $proxyConfig .= $this->createProxyConfigBlock($this->serverNames) . "\n";
-        }
-
-        (new HostingEnvironment())->updateContainerFiles('proxy', 'nginx.conf', $proxyConfig);
-
-        return [
-            'proxy_config_path' => 'nginx.conf',
-            'proxy_config' => $proxyConfig,
-        ];
-    }
-
-    /**
-     * Create the proxy configuration for the Nginx server.
-     * 
-     * @return array
-     */
-    protected function proxyContainerCreation(): array
-    {
-       $config = Yaml::dump($this->proxyYamlArr, 4, 2, Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK);
-     
-        (new HostingEnvironment())->updateContainerFiles('proxy','docker-composer_proxy.yml', $config);
-        return [];
-    }
+  
 
     /**
      * Generates the Nginx configuration array for each server name in the array.
@@ -145,7 +85,7 @@ class ProxyGenerator
         return [
             'domain_list' => $domainList,
             'proxy' => $this->proxyConfigCreation($domainList),
-            'container' => $this->proxyContainerCreation(), 
+            'container' => $this->containerYamlCreation('proxy','docker-composer_proxy.yml', $this->proxyYamlArr),
         ];
     }
 }
