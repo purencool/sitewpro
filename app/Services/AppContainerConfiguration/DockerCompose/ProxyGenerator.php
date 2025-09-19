@@ -88,4 +88,12 @@ class ProxyGenerator extends Generator
             'container' => $this->containerYamlCreation('proxy','docker-composer_proxy.yml', $this->proxyYamlArr),
         ];
     }
+
+    /**
+     * @inherit
+     */
+    public function fileName():string 
+    {
+        return 'proxy/docker-composer_proxy.yml';
+    }
 }

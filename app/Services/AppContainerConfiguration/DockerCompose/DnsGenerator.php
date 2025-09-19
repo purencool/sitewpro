@@ -43,8 +43,8 @@ class DnsGenerator extends Generator
                 'image' => 'coredns/coredns:latest',
                 'container_name' => 'coredns',
                 'command' => '-conf /etc/coredns/Corefile',
-                'ports' => ['- "53:53/udp"','- "53:53/tcp"'],
-                'volumes' => ['- ./conf:/etc/coredns'],
+                'ports' => ['53:53/udp','53:53/tcp'],
+                'volumes' => ['./conf:/etc/coredns'],
                 'restart' => 'on-failure',
             ],
         ],
@@ -61,5 +61,14 @@ class DnsGenerator extends Generator
             'config' => $this->configCreation('dns', 'Corefile', $this->config),
             'container' => $this->containerYamlCreation('dns', 'docker-composer_dns.yml', $this->yamlArr), 
         ];
+    }
+
+    
+    /**
+     * @inherit
+     */
+    public function fileName():string 
+    {
+        return 'dns/docker-composer_dns.yml';
     }
 }

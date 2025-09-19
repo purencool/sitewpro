@@ -4,8 +4,7 @@ namespace App\Services\AppContainerConfiguration;
 
 use App\Services\AppContainerConfiguration\DockerCompose\DnsGenerator;
 use App\Services\AppContainerConfiguration\DockerCompose\ProxyGenerator;
-use App\Services\AppContainerConfiguration\DockerCompose\StartGenerator;
-use App\Services\AppContainerConfiguration\DockerCompose\StopGenerator;
+use App\Services\AppContainerConfiguration\DockerCompose\StartStopGenerator;
 use App\Services\AppDirectoryStructure\HostingEnvironment;
 
 /**
@@ -30,11 +29,16 @@ class ContainerConfiguration
      */
     public function generate(string $type = 'docker_compose' , $dns = 'cordns'): array
     {
+       $startStop = new StartStopGenerator();
+       $dns = new DnsGenerator();
+       $startStop->setPathAndFileNames($dns->fileName()); 
+       $proxy = new ProxyGenerator();
+       $startStop->setPathAndFileNames($proxy->fileName()); 
+
         return ['configuration' => [
-            'dns' => (new DnsGenerator())->generateConfiguration(),
-            'proxy' => (new ProxyGenerator())->generateProxyConfiguration(),
-            'start' => (new StartGenerator())->generateStartConfiguration(),
-            'stop' => (new StopGenerator())->generateStopConfiguration(),
+            'dns' => $dns->generateConfiguration(),
+            'proxy' => $proxy->generateProxyConfiguration(),
+            'start_stop' => $startStop->generateStartStopConfiguration(),
             'backup' => (new HostingEnvironment())->createContainerConfigBackup()
         ]];
     }

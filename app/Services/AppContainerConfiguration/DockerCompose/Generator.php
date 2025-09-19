@@ -119,4 +119,12 @@ class Generator implements GeneratorInterface
         return [];
     }
 
+    /**
+     * @inherit
+     */
+    public function fileName():string 
+    {
+        return 'generator';
+    }
+
 }

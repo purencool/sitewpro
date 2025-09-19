@@ -11,4 +11,5 @@ namespace App\Services\AppContainerConfiguration\DockerCompose;
  */
 interface GeneratorInterface
 {
+    public function fileName():string;
 }
