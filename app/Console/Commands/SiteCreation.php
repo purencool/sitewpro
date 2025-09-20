@@ -66,7 +66,7 @@ class SiteCreation extends Command
         }
 
         // 2. What type of software are you using?
-        $softwareType = $this->ask('What type of software are you using?');
+        $this->choice('What type of software are you using?', ['Html' ,'NodeJS', 'Drupal','Laravel','Wordpress']);
         $resultsFromTheQuestions['software'] = $softwareType;
 
         // 3. Please provide a description of what this app does.
@@ -74,7 +74,7 @@ class SiteCreation extends Command
         $resultsFromTheQuestions['description'] = $description;
 
         // 4. Which Docker or Podman container are you using?
-        $containerType = $this->choice('Name container are you using?', ['one.yaml', 'two.yaml']);
+        $containerType = $this->choice('Name container are you using?', ['Apache', 'Drupal', 'Drupal Solr', 'Laravel', 'Node' ,'Hyper']);
         $resultsFromTheQuestions['container_type'] = $containerType;
 
         // 5. Are you using a code management tool like git?
