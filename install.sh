@@ -65,8 +65,8 @@ pwd_path=$(pwd)
 git clone https://github.com/purencool/sitewpro.git app
 mkdir hosting
 mkdir hosting/config
-cp $pwd_path/app/.env.example .env
-/usr/local/bin/composer $pwd_path/update
+cp $pwd_path/app/.env.example $pwd_path/app/.env
+/usr/local/bin/composer $pwd_path/app/update
 
 ##
 # Install hosting directory structure.
@@ -82,8 +82,8 @@ php artisan key:generate
 # Set database connection to database
 ##
 touch $pwd_path/hosting/config/database.sqlite
-echo "DB_CONNECTION=sqlite" >> .env
-echo "DB_DATABASE=$pwd_path/hosting/config/database.sqlite" >> .env
+echo "DB_CONNECTION=sqlite" >> $pwd_path/app/.env
+echo "DB_DATABASE=$pwd_path/hosting/config/database.sqlite" >> $pwd_path/app/.env
 
 ##
 #  artisan table creation 
