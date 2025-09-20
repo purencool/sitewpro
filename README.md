@@ -65,7 +65,9 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 php phpDocumentor.phar run
 
 ## Installation
-curl -O https://raw.githubusercontent.com/purencool/sitewpro/refs/heads/main/install.sh && bash ./install.sh debian
+```
+curl -O https://raw.githubusercontent.com/purencool/sitewpro/refs/heads/main/install.sh && bash ./install.sh debian && cd app && rm ../install.sh && ./cli
+```
 
 
 ## App development
