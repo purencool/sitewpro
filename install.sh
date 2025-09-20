@@ -58,8 +58,6 @@ fi
 # Application path.
 ##
 pwd_path=$(pwd)
-cd $pwd_path'/app'
-
 
 ##
 # Install application.
@@ -67,12 +65,14 @@ cd $pwd_path'/app'
 git clone https://github.com/purencool/sitewpro.git app
 mkdir hosting
 mkdir hosting/config
-cp .env.example .env
-/usr/local/bin/composer update
+cd $pwd_path'/app'
 
 ##
 # Install hosting directory structure.
 ##
+
+cp .env.example .env
+/usr/local/bin/composer update
 ./appcli cli:install
   
 ##
